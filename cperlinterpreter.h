@@ -56,7 +56,7 @@ public:
 	/** parse arguments like for a command line of perl */
 	int Parse(int argc, char *argv[]);
 
-	int CallArgv(const char *Function, int Flags, char * Args [] );
+	bool CallArgv(const char *Function, int Flags, char * Args [] );
 protected:
 	PerlInterpreter *mPerl;
 };

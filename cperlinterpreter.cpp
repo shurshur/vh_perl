@@ -61,12 +61,30 @@ int cPerlInterpreter::Parse(int argc, char *argv[])
 	return result;
 }
 
-int cPerlInterpreter::CallArgv(const char *Function, int Flags, char * Args [] )
+bool cPerlInterpreter::CallArgv(const char *Function, int Flags, char * Args [] )
 {
 	PerlInterpreter *my_perl = mPerl;
 	SetMyContext();
-	int n = call_argv(Function, Flags , Args );
-	return n;
+	// Don't use Flags, define another!
+	dSP;
+	int n;
+	bool ret = true;
+	ENTER;
+	SAVETMPS;
+	n = call_argv(Function, G_EVAL|G_SCALAR , Args );
+	SPAGAIN;
+	if(SvTRUE(ERRSV)) {
+	  STRLEN n_a;
+	  //cerr << "ERROR CALL " << Function << " [" << SvPV(ERRSV, n_a) << "]" << endl;
+	} else if(n==1) {
+	  ret = POPi;
+	  //cerr << "CALL " << Function << " ret " << ret << endl;
+	} else {
+	  cerr << "Call " << Function << ": expected 1 return value, but " << n << " returned" << endl;
+	}
+	FREETMPS;
+	LEAVE;
+	return ret;
 }
 
 };

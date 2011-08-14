@@ -62,15 +62,15 @@ void nVerliHub::nPerlPlugin::cpiPerl::OnLoad(cServerDC* server)
 bool nVerliHub::nPerlPlugin::cpiPerl::OnNewConn(cConnDC * conn)
 {
 	char *args[] =  { (char *)conn->AddrIP().c_str(), NULL };
-	mPerl.CallArgv("VH_OnNewConn",G_EVAL|G_DISCARD, args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnNewConn",G_EVAL|G_DISCARD, args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnCloseConn(cConnDC * conn)
 {
 	char *args[] =  { (char *)conn->AddrIP().c_str(), NULL };
-	mPerl.CallArgv("VH_OnCloseConn",G_EVAL|G_DISCARD, args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnCloseConn",G_EVAL|G_DISCARD, args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgAny(cConnDC *conn , cMessageDC *msg)
@@ -78,8 +78,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgAny(cConnDC *conn , cMessageDC 
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->mStr.c_str(),
 				NULL };
-	mPerl.CallArgv("VH_OnParsedMsgAny",G_EVAL|G_DISCARD, args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgAny",G_EVAL|G_DISCARD, args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSupport(cConnDC *conn , cMessageDC *msg)
@@ -87,8 +87,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSupport(cConnDC *conn , cMessag
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->mStr.c_str(),
 				NULL };
-	mPerl.CallArgv("VH_OnParsedMsgSupport",G_EVAL|G_DISCARD, args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgSupport",G_EVAL|G_DISCARD, args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgValidateNick(cConnDC *conn , cMessageDC *msg)
@@ -96,8 +96,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgValidateNick(cConnDC *conn , cM
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_1_ALL).c_str(),
 				NULL }; // eCH_1_ALL, eCH_1_PARAM
-	mPerl.CallArgv("VH_OnParsedMsgValidateNick",G_EVAL|G_DISCARD, args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgValidateNick",G_EVAL|G_DISCARD, args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgMyPass(cConnDC *conn , cMessageDC *msg)
@@ -105,8 +105,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgMyPass(cConnDC *conn , cMessage
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_1_ALL).c_str(),
 				NULL }; // eCH_1_ALL, eCH_1_PARAM
-	mPerl.CallArgv("VH_OnParsedMsgMyPass",G_EVAL|G_DISCARD, args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgMyPass",G_EVAL|G_DISCARD, args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgMyINFO(cConnDC *conn , cMessageDC *msg)
@@ -114,8 +114,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgMyINFO(cConnDC *conn , cMessage
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_MI_ALL).c_str(),
 				NULL }; // eCH_MI_ALL, eCH_MI_DEST, eCH_MI_NICK, eCH_MI_INFO, eCH_MI_DESC, eCH_MI_SPEED, eCH_MI_MAIL, eCH_MI_SIZE;
-	mPerl.CallArgv("VH_OnParsedMsgMyINFO",G_EVAL|G_DISCARD, args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgMyINFO",G_EVAL|G_DISCARD, args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSearch(cConnDC *conn , cMessageDC *msg)
@@ -123,8 +123,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSearch(cConnDC *conn , cMessage
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->mStr.c_str(),
 				NULL }; // active: eCH_AS_ALL, eCH_AS_ADDR, eCH_AS_IP, eCH_AS_PORT, eCH_AS_QUERY; passive: eCH_PS_ALL, eCH_PS_NICK, eCH_PS_QUERY;
-	mPerl.CallArgv("VH_OnParsedMsgSearch",G_EVAL|G_DISCARD, args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgSearch",G_EVAL|G_DISCARD, args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSR(cConnDC *conn , cMessageDC *msg)
@@ -132,8 +132,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSR(cConnDC *conn , cMessageDC *
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_SR_ALL).c_str(),
 				NULL }; // eCH_SR_ALL, eCH_SR_FROM, eCH_SR_PATH, eCH_SR_SIZE, eCH_SR_SLOTS, eCH_SR_SL_FR, eCH_SR_SL_TO, eCH_SR_HUBINFO, eCH_SR_TO;
-	mPerl.CallArgv("VH_OnParsedMsgSR",G_EVAL|G_DISCARD, args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgSR",G_EVAL|G_DISCARD, args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgChat(cConnDC *conn , cMessageDC *msg)
@@ -142,8 +142,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgChat(cConnDC *conn , cMessageDC
 		(char *)conn->mpUser->mNick.c_str(), 
 		(char *) msg->ChunkString(eCH_CH_MSG).c_str(), 
 		NULL}; // eCH_CH_ALL, eCH_CH_NICK, eCH_CH_MSG;
-	mPerl.CallArgv("VH_OnParsedMsgChat",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgChat",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgPM(cConnDC *conn , cMessageDC *msg)
@@ -153,8 +153,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgPM(cConnDC *conn , cMessageDC *
 		(char *) msg->ChunkString(eCH_PM_MSG).c_str(), 
 		(char *) msg->ChunkString(eCH_PM_TO).c_str(),
 		NULL}; // eCH_PM_ALL, eCH_PM_TO, eCH_PM_FROM, eCH_PM_CHMSG, eCH_PM_NICK, eCH_PM_MSG;
-	mPerl.CallArgv("VH_OnParsedMsgPM",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgPM",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnValidateTag(cConnDC *conn , cDCTag *tag)
@@ -162,8 +162,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnValidateTag(cConnDC *conn , cDCTag *tag)
 	char *args[]= {	(char *)conn->mpUser->mNick.c_str(),
 				(char *) tag->mTag.c_str(),
 				NULL};
-	mPerl.CallArgv("VH_OnValidateTag",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnValidateTag",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorCommand(cConnDC *conn , std::string *str)
@@ -171,8 +171,9 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorCommand(cConnDC *conn , std::str
 	char *args[]= {	(char *)conn->mpUser->mNick.c_str(),
 				(char *) str->c_str(),
 				NULL};
-	mPerl.CallArgv("VH_OnOperatorCommand",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnOperatorCommand",G_EVAL|G_DISCARD,args);
+	LogStream() << endl << "=" << ret << endl << endl;
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorKicks(cUser *op , cUser *user, std::string *reason)
@@ -181,8 +182,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorKicks(cUser *op , cUser *user, s
 				(char *)user->mNick.c_str(),
 				(char *)reason->c_str(),
 				NULL };
-	mPerl.CallArgv("VH_OnOperatorKicks",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnOperatorKicks",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorDrops(cUser *op , cUser *user)
@@ -190,8 +191,8 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorDrops(cUser *op , cUser *user)
 	char *args[]= {	(char *)op->mNick.c_str(),
 				(char *)user->mNick.c_str(),
 				NULL };
-	mPerl.CallArgv("VH_OnOperatorDrops",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnOperatorDrops",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnUserCommand(cConnDC *conn , std::string *str)
@@ -199,43 +200,43 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnUserCommand(cConnDC *conn , std::string 
 	char *args[]= {	(char *)conn->mpUser->mNick.c_str(),
 				(char *) str->c_str(),
 				NULL};
-	mPerl.CallArgv("VH_OnUserCommand",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnUserCommand",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnUserLogin(cUser *user)
 {
 	char *args[]= { (char *)user->mNick.c_str(), NULL };
-	mPerl.CallArgv("VH_OnUserLogin",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnUserLogin",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnUserLogout(cUser *user)
 {
 	char *args[]= { (char *)user->mNick.c_str(), NULL };
-	mPerl.CallArgv("VH_OnUserLogout",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnUserLogout",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnTimer()
 {
 	char *args[]= { NULL };
-	mPerl.CallArgv("VH_OnTimer",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnTimer",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnNewReg(cRegUserInfo *reginfo)
 {
 	char *args[]= { NULL };
-	mPerl.CallArgv("VH_OnNewReg",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnNewReg",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnNewBan(cBan *ban)
 {
 	char *args[]= { NULL };
-	mPerl.CallArgv("VH_OnNewReg",G_EVAL|G_DISCARD,args);
-	return true;
+	bool ret = mPerl.CallArgv("VH_OnNewReg",G_EVAL|G_DISCARD,args);
+	return ret;
 }
 
 REGISTER_PLUGIN(nVerliHub::nPerlPlugin::cpiPerl);
