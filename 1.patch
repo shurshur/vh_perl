@@ -1,0 +1,11 @@
+diff --git a/plugins/CMakeLists.txt b/plugins/CMakeLists.txt
+index 39852ee..e270c46 100644
+--- a/plugins/CMakeLists.txt
++++ b/plugins/CMakeLists.txt
+@@ -36,3 +36,6 @@ MACRO_LOG_FEATURE(ENABLE_PLUGIN "replacer" "Replace given patterns in text messa
+ 
+ ADD_PLUGIN(ENABLE_PLUGIN floodprot)
+ MACRO_LOG_FEATURE(ENABLE_PLUGIN "floodprot" "Offer more control from users flooding the hub")
++
++ADD_PLUGIN(ENABLE_PLUGIN perl)
++MACRO_LOG_FEATURE(ENABLE_PLUGIN "perl" "Allows you to use scripts written with Perl")
