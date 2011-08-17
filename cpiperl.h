@@ -10,12 +10,11 @@
 #ifndef CPIPERL_H
 #define CPIPERL_H
 
-#define DEFAULT_PERL_SCRIPT "/scripts/test.pl"
-
-#include <verlihub/cvhplugin.h>
-#include <verlihub/cconndc.h>
-#include "cperlinterpreter.h"
+#include "src/cvhplugin.h"
+#include "src/cconndc.h"
+//#include "cperlinterpreter.h"
 #include "cconsole.h"
+#include "cperlmulti.h"
 
 using namespace nScripts;
 /*
@@ -63,7 +62,9 @@ public:
 	virtual bool OnNewBan(cBan *);
 
 private:
-	cPerlInterpreter mPerl;
+	virtual bool AutoLoad();
+	string mScriptDir;
+	cPerlMulti mPerl;
 };
 
 	}; // namespace nPerlPlugin

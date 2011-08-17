@@ -19,14 +19,14 @@ SET(PERLSCRIPT_HDRS
 	cpiperl.h
 	cconsole.h
 	cperlinterpreter.h
-	cperlscript.h
+	cperlmulti.h
 )
 
 SET(PERLSCRIPT_SRCS
 	cpiperl.cpp
 	cconsole.cpp
 	cperlinterpreter.cpp
-	cperlscript.cpp
+	cperlmulti.cpp
 )
 
 ADD_LIBRARY(libperl_pi MODULE ${PERLSCRIPT_SRCS})

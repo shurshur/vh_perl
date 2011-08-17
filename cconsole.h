@@ -23,7 +23,7 @@
 #ifndef CCONSOLE_H
 #define CCONSOLE_H
 
-#include <verlihub/ccommandcollection.h>
+#include "src/ccommandcollection.h"
 
 namespace nVerliHub {
 	namespace nSocket {

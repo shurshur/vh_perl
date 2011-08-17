@@ -8,8 +8,11 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 #include <config.h>
-#include <verlihub/cserverdc.h>
+#include "src/cserverdc.h"
+#include "src/stringutils.h"
 #include "cpiperl.h"
+
+using namespace nVerliHub::nUtils;
 
 nVerliHub::nPerlPlugin::cpiPerl::cpiPerl()
 {
@@ -49,14 +52,40 @@ bool nVerliHub::nPerlPlugin::cpiPerl::RegisterAll()
 
 void nVerliHub::nPerlPlugin::cpiPerl::OnLoad(cServerDC* server)
 {
-	mServer = server;
-	if(!mServer) {
-	  std::cerr << "OOPS" << std::endl;
+	cVHPlugin::OnLoad(server);
+
+	mScriptDir = mServer->mConfigBaseDir + "/scripts/";
+
+	AutoLoad();
+}
+
+bool nVerliHub::nPerlPlugin::cpiPerl::AutoLoad()
+{
+	if(Log(0))
+		LogStream() << "Open dir: " << mScriptDir << endl;
+	string pathname, filename;
+	DIR *dir = opendir(mScriptDir.c_str());
+	if(!dir) {
+		if(Log(1))
+			LogStream() << "Error opening directory" << endl;
+		return false;
 	}
-	string script(mServer->mConfigBaseDir);
-	script.append(DEFAULT_PERL_SCRIPT);
-	char *argv[] = { (char*)"", (char*)script.c_str(), NULL };
-	mPerl.Parse(2, argv);//) Suicide();
+	struct dirent *dent = NULL;
+
+	while(NULL != (dent=readdir(dir))) {
+		filename = dent->d_name;
+		if((filename.size() > 3) && (StrCompare(filename,filename.size()-3,3,".pl")==0)) {
+			pathname = mScriptDir + filename;
+			char *argv[] = { (char*)"", (char*)pathname.c_str(), NULL };
+			mPerl.Parse(2, argv);
+			// FIXME: check weither all ok?
+			if(Log(1))
+				LogStream() << "Success loading and parsing Perl script: " << filename << endl;
+		}
+	}
+
+	closedir(dir);
+	return true;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnNewConn(cConnDC * conn)

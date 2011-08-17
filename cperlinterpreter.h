@@ -39,6 +39,8 @@ namespace nScripts
 class cPerlInterpreter
 {
 public:
+	std::string mPath;
+
 	cPerlInterpreter();
 	virtual ~cPerlInterpreter();
 

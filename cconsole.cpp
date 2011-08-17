@@ -20,14 +20,13 @@
 *   Free Software Foundation, Inc.,                                       *
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
-#include <verlihub/cconndc.h>
-#include <verlihub/cserverdc.h>
+#include "src/cconndc.h"
+#include "src/cserverdc.h"
+#include "src/stringutils.h"
+#include "src/i18n.h"
 #include "cconsole.h"
 #include "cpiperl.h"
 #include "cperlinterpreter.h"
-//#include "curr_date_time.h"
-#include <verlihub/stringutils.h>
-#include <verlihub/i18n.h>
 #include <dirent.h>
 
 #define PADDING 25
