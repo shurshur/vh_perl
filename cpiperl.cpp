@@ -14,7 +14,8 @@
 
 using namespace nVerliHub::nUtils;
 
-nVerliHub::nPerlPlugin::cpiPerl::cpiPerl()
+nVerliHub::nPerlPlugin::cpiPerl::cpiPerl():
+mConsole(this)
 {
 	mName = "PerlScript";
 	mVersion= PERLSCRIPT_VERSION;
@@ -197,6 +198,10 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnValidateTag(cConnDC *conn , cDCTag *tag)
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorCommand(cConnDC *conn , std::string *str)
 {
+	if((conn != NULL) && (conn->mpUser != NULL) && (str != NULL))
+		if(mConsole.DoCommand(*str, conn))
+			return false;
+
 	char *args[]= {	(char *)conn->mpUser->mNick.c_str(),
 				(char *) str->c_str(),
 				NULL};

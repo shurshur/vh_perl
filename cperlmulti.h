@@ -18,7 +18,9 @@ public:
 	int Parse(int argc, char*argv[]);
 
 	bool CallArgv(const char *Function, int Flags, char * Args [] );
-protected:
+	
+	int Size() { return mPerl.size(); }
+
 	std::vector<cPerlInterpreter*> mPerl;
 };
 

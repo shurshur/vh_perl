@@ -34,6 +34,8 @@ namespace nVerliHub {
 class cpiPerl : public nPlugin::cVHPlugin
 {
 public:
+	cPerlMulti mPerl;
+
 	cpiPerl();
 	virtual ~cpiPerl();
 	virtual void OnLoad(cServerDC* server);
@@ -61,10 +63,12 @@ public:
 	virtual bool OnNewReg(cRegUserInfo *);
 	virtual bool OnNewBan(cBan *);
 
+	int Size() { return mPerl.Size(); }
+
 private:
+	cConsole mConsole;
 	virtual bool AutoLoad();
 	string mScriptDir;
-	cPerlMulti mPerl;
 };
 
 	}; // namespace nPerlPlugin

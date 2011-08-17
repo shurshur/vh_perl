@@ -45,6 +45,18 @@ protected:
 		cpiPerl *GetPI(){ return ((cConsole *)(mCommand->mCmdr->mOwner))->mPerl;}
 	};
 
+	class cfGetPerlScript : public cfBase { virtual bool operator()();} mcfPerlScriptGet;
+	class cfAddPerlScript : public cfBase { virtual bool operator()();} mcfPerlScriptAdd;
+	class cfDelPerlScript : public cfBase { virtual bool operator()();} mcfPerlScriptDel;
+	class cfReloadPerlScript : public cfBase { virtual bool operator()();} mcfPerlScriptRe;
+
+	nCmdr::cCommand mCmdPerlScriptGet;
+	nCmdr::cCommand mCmdPerlScriptAdd;
+	nCmdr::cCommand mCmdPerlScriptDel;
+	nCmdr::cCommand mCmdPerlScriptRe;
+	nCmdr::cCommand mCmdPerlScriptLog;
+	nCmdr::cCommand mCmdPerlScriptInfo;
+	nCmdr::cCommand mCmdPerlScriptVersion;
 	nCmdr::cCommandCollection mCmdr;
 };
 
