@@ -39,7 +39,7 @@ namespace nScripts
 class cPerlInterpreter
 {
 public:
-	std::string mPath;
+	std::string mScriptName;
 
 	cPerlInterpreter();
 	virtual ~cPerlInterpreter();

@@ -73,7 +73,7 @@ bool cConsole::cfGetPerlScript::operator()()
 	(*mOS) << toUpper(_("Script")) << "\n";
 	(*mOS) << " " << string(6+20,'=') << endl;
 	for(int i = 0; i < GetPI()->Size(); i++) {
-		(*mOS) << " " << setw(6) << setiosflags(ios::left) << i << GetPI()->mPerl.mPerl[i]->mPath << "\r\n";
+		(*mOS) << " " << setw(6) << setiosflags(ios::left) << i << GetPI()->mPerl.mPerl[i]->mScriptName << "\r\n";
 	}
 	return true;
 }
@@ -99,7 +99,7 @@ bool cConsole::cfDelPerlScript::operator()()
 	bool number = false;
 	int i = 0, num = 0;
 	vector<cPerlInterpreter *>::iterator it;
-	cPerlInterpreter *li;
+	cPerlInterpreter *pi;
 
 	if (IsNumber(scriptfile.c_str())) {
 		num = atoi(scriptfile.c_str());
@@ -107,12 +107,12 @@ bool cConsole::cfDelPerlScript::operator()()
 	}
 
 	for(it = GetPI()->mPerl.mPerl.begin(); it != GetPI()->mPerl.mPerl.end(); ++it, ++i) {
-		li = *it;
-		if ((number && num == i) || (!number && StrCompare(li->mPath,0,li->mPath.size(),scriptfile)==0)) {
+		pi = *it;
+		if ((number && num == i) || (!number && StrCompare(pi->mScriptName,0,pi->mScriptName.size(),scriptfile)==0)) {
 			found = true;
-			scriptfile = li->mPath;
-			(*mOS) << autosprintf(_("Script %s stopped."), li->mPath.c_str()) << " ";
-			delete li;
+			scriptfile = pi->mScriptName;
+			(*mOS) << autosprintf(_("Script %s stopped."), pi->mScriptName.c_str()) << " ";
+			delete pi;
 			GetPI()->mPerl.mPerl.erase(it);
 			break;
 		}
@@ -135,7 +135,7 @@ bool cConsole::cfAddPerlScript::operator()()
 	int num = 0;
 	GetParStr(1, scriptfile);
 	vector<cPerlInterpreter *>::iterator it;
-	cPerlInterpreter *li;
+	cPerlInterpreter *pi;
 
 	if (IsNumber(scriptfile.c_str())) {
 		num = atoi(scriptfile.c_str());
@@ -157,7 +157,7 @@ bool cConsole::cfAddPerlScript::operator()()
 		while(NULL != (dent=readdir(dir))) {
 
 			filename = dent->d_name;
-			if((filename.size() > 4) && (StrCompare(filename,filename.size()-4,4,".lua")==0)) {
+			if((filename.size() > 4) && (StrCompare(filename,filename.size()-3,3,".pl")==0)) {
 				if(i == num)
 					scriptfile = pathname + "/" + filename;
 				i++;
@@ -168,8 +168,8 @@ bool cConsole::cfAddPerlScript::operator()()
 	}
 	char *argv[] = { (char*)"", (char*)scriptfile.c_str(), NULL };
 	for(it = GetPI()->mPerl.mPerl.begin(); it != GetPI()->mPerl.mPerl.end(); ++it) {
-		li = *it;
-		if (StrCompare(li->mPath,0,li->mPath.size(),scriptfile)==0) {
+		pi = *it;
+		if (StrCompare(pi->mScriptName,0,pi->mScriptName.size(),scriptfile)==0) {
 			(*mOS) << autosprintf(_("Script %s is already running."), scriptfile.c_str()) << " ";
 			return false;
 		}
@@ -192,15 +192,15 @@ bool cConsole::cfReloadPerlScript::operator()()
 		number = true;
 	}
 
-	cPerlInterpreter *li;
+	cPerlInterpreter *pi;
 	vector<cPerlInterpreter *>::iterator it;
 	for(it = GetPI()->mPerl.mPerl.begin(); it != GetPI()->mPerl.mPerl.end(); ++it, ++i) {
-		li = *it;
-		if ((number && num == i) || (!number && StrCompare(li->mPath,0,li->mPath.size(),scriptfile)==0)) {
+		pi = *it;
+		if ((number && num == i) || (!number && StrCompare(pi->mScriptName,0,pi->mScriptName.size(),scriptfile)==0)) {
 			found = true;
-			(*mOS) << autosprintf(_("Script %s stopped."), li->mPath.c_str()) << " ";
-			scriptfile = li->mPath;
-			delete li;
+			(*mOS) << autosprintf(_("Script %s stopped."), pi->mScriptName.c_str()) << " ";
+			scriptfile = pi->mScriptName;
+			delete pi;
 			GetPI()->mPerl.mPerl.erase(it);
 			break;
 		}

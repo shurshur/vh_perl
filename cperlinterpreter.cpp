@@ -58,7 +58,7 @@ int cPerlInterpreter::Parse(int argc, char *argv[])
 	SetMyContext();
 	int result = perl_parse(mPerl,  xs_init, argc, argv, NULL);
 	PL_exit_flags |= PERL_EXIT_DESTRUCT_END;
-	mPath = argv[1];
+	mScriptName = argv[1];
 	return result;
 }
 

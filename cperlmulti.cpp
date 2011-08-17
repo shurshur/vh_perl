@@ -19,7 +19,6 @@ cPerlMulti::~cPerlMulti()
 
 int cPerlMulti::Parse(int argc, char*argv[]) {
 	cPerlInterpreter *perl = new cPerlInterpreter();
-	std::cerr << argv[1] << std::endl;
 	int ret = perl->Parse(argc, argv);
 	mPerl.push_back(perl);
 	return ret;
@@ -30,7 +29,7 @@ bool cPerlMulti::CallArgv(const char *Function, int Flags, char * Args [] ) {
 	for(std::vector<cPerlInterpreter*>::const_iterator i = mPerl.begin(); i != mPerl.end(); i++) {
 		s++;
 		bool ret = (*i)->CallArgv(Function, Flags, Args);
-		//std::cerr << "Call " << Function << " on script " << (*i)->mPath << " returns " << ret << std::endl;
+		//std::cerr << "Call " << Function << " on script " << (*i)->mScriptName << " returns " << ret << std::endl;
 		if(!ret) return false;
 	}
 	return true;
