@@ -1,0 +1,21 @@
+1. Clone verlihub.git repository
+
+2. git clone git://github.com/shurshur/vh_perl.git /path/to/verlihub.git/verlihub/plugins/perl
+
+3. cd /path/to/verlihub.git/verlihub/plugins
+
+4. patch -p2 < perl/vh-cmake.patch
+
+5. cd perl
+
+6. cmake ../.. && make && make install
+
+7. cd vh
+
+8. perl Makefile.PL && make && make install
+
+9. Type in hub mainchat: !addplug perl -p /path/to/libperl_pi.so -d "Support for perl scripts"
+
+10. Type in hub mainchat: !onplug perl
+
+Type in mainchat for plugin autoloading: !modplug perl -a1
