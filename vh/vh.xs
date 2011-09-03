@@ -34,11 +34,34 @@ CloseConnection(nick)
 	char *	nick
 
 char *
+GetUserCC(nick)
+	char * nick
+
+char *
 GetMyINFO(nick)
 	char *	nick
 
+bool
+AddRegUser(nick, uclass, passwd, op)
+	char * nick
+	int uclass
+	char * passwd
+	char * op
+
+bool
+DelRegUser(nick)
+	char * nick
+
 int
 GetUserClass(nick)
+	char *	nick
+
+char *
+GetUserHost(nick)
+	char *	nick
+
+char *
+GetUserIP(nick)
 	char *	nick
 
 char *
@@ -46,8 +69,19 @@ ParseCommand(command_line)
 	char *	command_line
 
 bool
-SendDataToAll(data, min_class, max_class)
+SendToClass(data, min_class, max_class)
 	char *	data
+	int	min_class
+	int	max_class
+
+bool
+SendToAll(data)
+	char *	data
+
+bool
+SendPMToAll(data, from, min_class, max_class)
+	char *	data
+	char *	from
 	int	min_class
 	int	max_class
 
@@ -74,3 +108,15 @@ GetConfig(configname, variable, configvalue, valuesize)
 	char *	variable
 	char *  configvalue
 	int     valuesize
+
+int
+GetUsersCount()
+
+char *
+GetNickList()
+
+double
+GetTotalShareSize()
+
+char *
+GetVHCfgDir()

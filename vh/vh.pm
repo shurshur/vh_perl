@@ -62,6 +62,22 @@ XSLoader::load('vh', $VERSION);
 
 # Preloaded methods go here.
 
+sub SendToUser {
+  return SendDataToUser(@_);
+}
+
+sub SendDataToAll {
+  return SendToClass(@_);
+}
+
+sub Disconnect {
+  return CloseConnection(@_);
+}
+
+sub DisconnectByName {
+  return CloseConnection(@_);
+}
+
 # Autoload methods go after =cut, and are processed by the autosplit program.
 
 1;
