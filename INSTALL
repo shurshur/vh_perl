@@ -10,12 +10,8 @@
 
 6. cmake ../.. && make && make install
 
-7. cd vh
+7. Type in hub mainchat: !addplug perl -p /path/to/libperl_pi.so -d "Support for perl scripts"
 
-8. perl Makefile.PL && make && make install
+8. Type in hub mainchat: !onplug perl
 
-9. Type in hub mainchat: !addplug perl -p /path/to/libperl_pi.so -d "Support for perl scripts"
-
-10. Type in hub mainchat: !onplug perl
-
-Type in mainchat for plugin autoloading: !modplug perl -a1
+If you want enable autoloading of plugin, just type in mainchat: !modplug perl -a1
