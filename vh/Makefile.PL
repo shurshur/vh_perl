@@ -12,6 +12,7 @@ close CFLAGS;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 WriteMakefile(
+    'FIRST_MAKEFILE'	=> 'Makefile.build',
     'NAME'		=> 'vh',
     'VERSION_FROM'	=> 'vh.pm', # finds $VERSION
     'PREREQ_PM'		=> {}, # e.g., Module::Name => 1.1
@@ -26,6 +27,7 @@ WriteMakefile(
     'CC'                => 'g++ -xc++',
     'LD'                => 'g++'
 );
+exit;
 if  (eval {require ExtUtils::Constant; 1}) {
   # If you edit these definitions to change the constants used by this module,
   # you will need to use the generated const-c.inc and const-xs.inc
