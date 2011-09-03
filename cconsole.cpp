@@ -1,9 +1,12 @@
 /**************************************************************************
-*   Original Author: Daniel Muller (dan at verliba dot cz)                *
-*                    Janos Horvath (bourne at freemail dot hu) 2004-05    *
+*   Copyright (C) 2004 by Dan Muller                                      *
+*   dan at verliba.cz                                                     *
 *                                                                         *
-*   Copyright (C) 2006-2011 by Verlihub Project                           *
-*   devs at verlihub-project dot org                                      *
+*   Copyright (C) 2004 by Janos Horvath                                   *
+*   bourne at freemail dot hu                                             *
+*                                                                         *
+*   Copyright (C) 2011 by Shurik                                          *
+*   shurik at sbin.ru                                                     *
 *                                                                         *
 *   This program is free software; you can redistribute it and/or modify  *
 *   it under the terms of the GNU General Public License as published by  *

@@ -1,12 +1,25 @@
-/***************************************************************************
- *   Copyright (C) 2003 by Dan Muller                                      *
- *   dan@verliba.cz                                                        *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- ***************************************************************************/
+/**************************************************************************
+*   Copyright (C) 2003 by Dan Muller                                      *
+*   dan at verliba.cz                                                     *
+*                                                                         *
+*   Copyright (C) 2011 by Shurik                                          *
+*   shurik at sbin.ru                                                     *
+*                                                                         *
+*   This program is free software; you can redistribute it and/or modify  *
+*   it under the terms of the GNU General Public License as published by  *
+*   the Free Software Foundation; either version 2 of the License, or     *
+*   (at your option) any later version.                                   *
+*                                                                         *
+*   This program is distributed in the hope that it will be useful,       *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+*   GNU General Public License for more details.                          *
+*                                                                         *
+*   You should have received a copy of the GNU General Public License     *
+*   along with this program; if not, write to the                         *
+*   Free Software Foundation, Inc.,                                       *
+*   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+***************************************************************************/
 #include <config.h>
 #include "src/cserverdc.h"
 #include "src/stringutils.h"
@@ -92,14 +105,14 @@ bool nVerliHub::nPerlPlugin::cpiPerl::AutoLoad()
 bool nVerliHub::nPerlPlugin::cpiPerl::OnNewConn(cConnDC * conn)
 {
 	char *args[] =  { (char *)conn->AddrIP().c_str(), NULL };
-	bool ret = mPerl.CallArgv("VH_OnNewConn",G_EVAL|G_DISCARD, args);
+	bool ret = mPerl.CallArgv("VH_OnNewConn",args);
 	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnCloseConn(cConnDC * conn)
 {
 	char *args[] =  { (char *)conn->AddrIP().c_str(), NULL };
-	bool ret = mPerl.CallArgv("VH_OnCloseConn",G_EVAL|G_DISCARD, args);
+	bool ret = mPerl.CallArgv("VH_OnCloseConn",args);
 	return ret;
 }
 
@@ -108,7 +121,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgAny(cConnDC *conn , cMessageDC 
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->mStr.c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("VH_OnParsedMsgAny",G_EVAL|G_DISCARD, args);
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgAny",args);
 	return ret;
 }
 
@@ -117,7 +130,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSupport(cConnDC *conn , cMessag
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->mStr.c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("VH_OnParsedMsgSupport",G_EVAL|G_DISCARD, args);
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgSupport",args);
 	return ret;
 }
 
@@ -126,7 +139,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgValidateNick(cConnDC *conn , cM
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_1_ALL).c_str(),
 				NULL }; // eCH_1_ALL, eCH_1_PARAM
-	bool ret = mPerl.CallArgv("VH_OnParsedMsgValidateNick",G_EVAL|G_DISCARD, args);
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgValidateNick",args);
 	return ret;
 }
 
@@ -135,7 +148,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgMyPass(cConnDC *conn , cMessage
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_1_ALL).c_str(),
 				NULL }; // eCH_1_ALL, eCH_1_PARAM
-	bool ret = mPerl.CallArgv("VH_OnParsedMsgMyPass",G_EVAL|G_DISCARD, args);
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgMyPass",args);
 	return ret;
 }
 
@@ -144,7 +157,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgMyINFO(cConnDC *conn , cMessage
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_MI_ALL).c_str(),
 				NULL }; // eCH_MI_ALL, eCH_MI_DEST, eCH_MI_NICK, eCH_MI_INFO, eCH_MI_DESC, eCH_MI_SPEED, eCH_MI_MAIL, eCH_MI_SIZE;
-	bool ret = mPerl.CallArgv("VH_OnParsedMsgMyINFO",G_EVAL|G_DISCARD, args);
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgMyINFO",args);
 	return ret;
 }
 
@@ -153,7 +166,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSearch(cConnDC *conn , cMessage
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->mStr.c_str(),
 				NULL }; // active: eCH_AS_ALL, eCH_AS_ADDR, eCH_AS_IP, eCH_AS_PORT, eCH_AS_QUERY; passive: eCH_PS_ALL, eCH_PS_NICK, eCH_PS_QUERY;
-	bool ret = mPerl.CallArgv("VH_OnParsedMsgSearch",G_EVAL|G_DISCARD, args);
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgSearch",args);
 	return ret;
 }
 
@@ -162,7 +175,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSR(cConnDC *conn , cMessageDC *
 	char *args[] =  {	(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_SR_ALL).c_str(),
 				NULL }; // eCH_SR_ALL, eCH_SR_FROM, eCH_SR_PATH, eCH_SR_SIZE, eCH_SR_SLOTS, eCH_SR_SL_FR, eCH_SR_SL_TO, eCH_SR_HUBINFO, eCH_SR_TO;
-	bool ret = mPerl.CallArgv("VH_OnParsedMsgSR",G_EVAL|G_DISCARD, args);
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgSR",args);
 	return ret;
 }
 
@@ -172,7 +185,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgChat(cConnDC *conn , cMessageDC
 		(char *)conn->mpUser->mNick.c_str(), 
 		(char *) msg->ChunkString(eCH_CH_MSG).c_str(), 
 		NULL}; // eCH_CH_ALL, eCH_CH_NICK, eCH_CH_MSG;
-	bool ret = mPerl.CallArgv("VH_OnParsedMsgChat",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgChat", args);
 	return ret;
 }
 
@@ -183,7 +196,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgPM(cConnDC *conn , cMessageDC *
 		(char *) msg->ChunkString(eCH_PM_MSG).c_str(), 
 		(char *) msg->ChunkString(eCH_PM_TO).c_str(),
 		NULL}; // eCH_PM_ALL, eCH_PM_TO, eCH_PM_FROM, eCH_PM_CHMSG, eCH_PM_NICK, eCH_PM_MSG;
-	bool ret = mPerl.CallArgv("VH_OnParsedMsgPM",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnParsedMsgPM", args);
 	return ret;
 }
 
@@ -192,7 +205,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnValidateTag(cConnDC *conn , cDCTag *tag)
 	char *args[]= {	(char *)conn->mpUser->mNick.c_str(),
 				(char *) tag->mTag.c_str(),
 				NULL};
-	bool ret = mPerl.CallArgv("VH_OnValidateTag",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnValidateTag", args);
 	return ret;
 }
 
@@ -205,7 +218,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorCommand(cConnDC *conn , std::str
 	char *args[]= {	(char *)conn->mpUser->mNick.c_str(),
 				(char *) str->c_str(),
 				NULL};
-	bool ret = mPerl.CallArgv("VH_OnOperatorCommand",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnOperatorCommand", args);
 	LogStream() << endl << "=" << ret << endl << endl;
 	return ret;
 }
@@ -216,7 +229,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorKicks(cUser *op , cUser *user, s
 				(char *)user->mNick.c_str(),
 				(char *)reason->c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("VH_OnOperatorKicks",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnOperatorKicks", args);
 	return ret;
 }
 
@@ -225,7 +238,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorDrops(cUser *op , cUser *user)
 	char *args[]= {	(char *)op->mNick.c_str(),
 				(char *)user->mNick.c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("VH_OnOperatorDrops",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnOperatorDrops", args);
 	return ret;
 }
 
@@ -234,42 +247,42 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnUserCommand(cConnDC *conn , std::string 
 	char *args[]= {	(char *)conn->mpUser->mNick.c_str(),
 				(char *) str->c_str(),
 				NULL};
-	bool ret = mPerl.CallArgv("VH_OnUserCommand",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnUserCommand", args);
 	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnUserLogin(cUser *user)
 {
 	char *args[]= { (char *)user->mNick.c_str(), NULL };
-	bool ret = mPerl.CallArgv("VH_OnUserLogin",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnUserLogin", args);
 	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnUserLogout(cUser *user)
 {
 	char *args[]= { (char *)user->mNick.c_str(), NULL };
-	bool ret = mPerl.CallArgv("VH_OnUserLogout",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnUserLogout", args);
 	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnTimer()
 {
 	char *args[]= { NULL };
-	bool ret = mPerl.CallArgv("VH_OnTimer",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnTimer", args);
 	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnNewReg(cRegUserInfo *reginfo)
 {
 	char *args[]= { NULL };
-	bool ret = mPerl.CallArgv("VH_OnNewReg",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnNewReg", args);
 	return ret;
 }
 
 bool nVerliHub::nPerlPlugin::cpiPerl::OnNewBan(cBan *ban)
 {
 	char *args[]= { NULL };
-	bool ret = mPerl.CallArgv("VH_OnNewReg",G_EVAL|G_DISCARD,args);
+	bool ret = mPerl.CallArgv("VH_OnNewReg", args);
 	return ret;
 }
 
