@@ -1,0 +1,25 @@
+Missed Perl callbacks found in Lua plugin:
+	vh::GetUpTime
+	vh::RegBot
+	vh::UnRegBot
+	vh::AddRobot
+	vh::DelRobot
+	vh::EditBot
+	vh::IsBot
+	vh::GetHubIp
+	vh::GetHubSecAlias
+	vh::IsUserOnline
+	vh::SQLQuery
+	vh::SQLFetch
+	vh::SQLFree
+	vh::GetOPList
+	vh::GetBotList
+	vh::GetBots
+	vh::GetTempRights
+	vh::SetTempRights
+	vh::GetTopic
+	vh::SetTopic
+
+Use Math::Int64 instead of double in GetTotalShareSize???
+Return vh::GetNickList as array
+Fix everytime rebuild of vh module in cmake

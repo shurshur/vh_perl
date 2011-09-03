@@ -34,4 +34,11 @@ SET_TARGET_PROPERTIES(libperl_pi PROPERTIES OUTPUT_NAME "perl_pi")
 find_library(PERL_LIBRARIES perl)
 target_link_libraries(libperl_pi ${PERL_LIBRARIES})
 
+add_custom_target(vh_make)
+add_custom_command(TARGET vh_make
+  COMMAND perl Makefile.PL
+  COMMAND make
+  WORKING_DIRECTORY "plugins/perl/vh")
+add_dependencies(libperl_pi vh_make)
+
 INSTALL(TARGETS libperl_pi LIBRARY DESTINATION lib)
