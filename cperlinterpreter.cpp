@@ -48,6 +48,8 @@ cPerlInterpreter::~cPerlInterpreter()
 {
 	PerlInterpreter *my_perl = mPerl;
 	SetMyContext();
+	char *args[] = { (char *)"UnLoad", NULL };
+	CallArgv("vh::VH__Call__Function", args);
 	perl_destruct(mPerl);
 	perl_free(mPerl);
 }
@@ -71,9 +73,12 @@ int cPerlInterpreter::Parse(int argc, char *argv[])
 {
 	PerlInterpreter *my_perl = mPerl;
 	SetMyContext();
-	int result = perl_parse(mPerl,  xs_init, argc, argv, NULL);
+	int result = perl_parse(mPerl, xs_init, argc, argv, NULL);
 	PL_exit_flags |= PERL_EXIT_DESTRUCT_END;
 	mScriptName = argv[1];
+	
+	char *args[] = { (char *)"Main", NULL };
+	CallArgv("vh::VH__Call__Function", args);
 	return result;
 }
 

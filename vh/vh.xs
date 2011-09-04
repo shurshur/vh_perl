@@ -102,12 +102,25 @@ SetConfig(configname, variable, value)
 	char *	variable
 	char *	value
 
-int
-GetConfig(configname, variable, configvalue, valuesize)
+char *
+GetConfig(configname, variable)
 	char *	configname
 	char *	variable
-	char *  configvalue
-	int     valuesize
+PPCODE:
+	char * val = new char[64];
+	int size = GetConfig(configname, variable, val, 64);
+	if (size<0) {
+		croak("Error calling GetConfig");
+		delete [] val;
+		XSRETURN_UNDEF;
+	}
+	if(size >= 63) {
+		delete [] val;
+		val = new char[size+1];
+		int size = GetConfig(configname, variable, val, size+1);
+	}
+	XPUSHs(sv_2mortal(newSVpv(val, size)));
+	delete [] val;
 
 int
 GetUsersCount()
