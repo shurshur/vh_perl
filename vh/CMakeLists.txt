@@ -35,4 +35,4 @@ INSTALL(
   FILES
     vh.pm
   DESTINATION
-    ${PERL_SITE_ARCH}/auto/vh/)
+    ${PERL_SITE_ARCH})

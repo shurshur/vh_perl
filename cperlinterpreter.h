@@ -30,8 +30,8 @@ namespace nPerl
 };
 using namespace nPerl;
 
-namespace nScripts
-{
+namespace nVerliHub {
+	namespace nPerlPlugin {
 
 /** \brief a wrapper for perl calling ; a c++ wrapper for the perl XS API
 
@@ -72,10 +72,13 @@ public:
 	int Parse(int argc, char *argv[]);
 
 	bool CallArgv(const char *Function, char * Args [] );
+        void ReportPerlError(char *error);
+
 protected:
 	PerlInterpreter *mPerl;
 };
 
-};
+	}; // namespace nPerlPlugin
+}; // namespace nVerlihub
 
 #endif

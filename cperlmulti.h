@@ -23,8 +23,8 @@
 #include "cperlinterpreter.h"
 #include <vector>
 
-namespace nScripts
-{
+namespace nVerliHub {
+	namespace nPerlPlugin {
 
 /* Class for multiplying perl interpreters for many scripts. May be rewritten in future. */
 
@@ -43,6 +43,7 @@ public:
 	std::vector<cPerlInterpreter*> mPerl;
 };
 
-};
+	}; // namespace nPerlPlugin
+}; // namespace nVerlihub
 
 #endif

@@ -21,6 +21,8 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 #include <iostream>
+#include "src/cserverdc.h"
+#include "src/script_api.h"
 #include "cperlinterpreter.h"
 
 using namespace std;
@@ -30,8 +32,9 @@ EXTERN_C void boot_DynaLoader (pTHX_ CV* cv);
 //EXTERN_C void boot_VHPerlExt (pTHX_ CV* cv);
 //EXTERN_C void boot_vh (pTHX_ CV* cv);
 
-namespace nScripts
-{
+namespace nVerliHub {
+	namespace nPerlPlugin {
+		using namespace nSocket;
 
 cPerlInterpreter::cPerlInterpreter()
 {
@@ -87,10 +90,9 @@ bool cPerlInterpreter::CallArgv(const char *Function, char * Args [] )
 	SPAGAIN;
 	if(SvTRUE(ERRSV)) {
 	  STRLEN n_a;
-	  //cerr << "ERROR CALL " << Function << " [" << SvPV(ERRSV, n_a) << "]" << endl;
+	  ReportPerlError(SvPV(ERRSV, n_a));
 	} else if(n==1) {
 	  ret = POPi;
-	  //cerr << "CALL " << Function << " ret " << ret << endl;
 	} else {
 	  cerr << "Call " << Function << ": expected 1 return value, but " << n << " returned" << endl;
 	}
@@ -99,7 +101,16 @@ bool cPerlInterpreter::CallArgv(const char *Function, char * Args [] )
 	return ret;
 }
 
-};
+void cPerlInterpreter::ReportPerlError(char * error)
+{
+	string error2 = "[ Perl ERROR ] ";
+	error2.append(error);
+	cServerDC * server = cServerDC::sCurrentServer;
+	if(server) SendPMToAll( (char *) error2.c_str(), (char *) server->mC.hub_security.c_str(), 3, 10);
+}
+
+	}; // namespace nPerlPlugin
+}; // namespace nVerlihub
 
 EXTERN_C void xs_init(pTHX)
 {

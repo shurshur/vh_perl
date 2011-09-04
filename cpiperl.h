@@ -28,8 +28,6 @@
 #include "cconsole.h"
 #include "cperlmulti.h"
 
-using namespace nScripts;
-
 namespace nVerliHub {
 	namespace nPerlPlugin {
 

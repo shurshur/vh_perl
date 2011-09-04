@@ -20,16 +20,35 @@ our @ISA = qw(Exporter);
 our %EXPORT_TAGS = ( 'all' => [ qw(
 	Ban
 	CloseConnection
+	GetUserCC
 	GetMyINFO
+	AddRegUser
+	DelRegUser
+	GetUserClass
+	GetUserHost
+	GetUserIP
 	ParseCommand
-	SendDataToAll
+	SendToClass
+	SendToAll
+	SendPMToAll
+	KickUser
 	SendDataToUser
+	SetConfig
+	GetConfig
+	GetUsersCount
+	GetNickList
+	GetTotalShareSize
+	GetVHCfgDir
+
+	SendToUser
+	SendDataToAll
+	Disconnect
+	DisconnectByName
 ) ] );
 
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
+our @EXPORT_OK = ( "VH__Call__Function", @{ $EXPORT_TAGS{'all'} } );
 
 our @EXPORT = qw(
-	
 );
 
 our $VERSION = '0.01';
@@ -76,6 +95,19 @@ sub Disconnect {
 
 sub DisconnectByName {
   return CloseConnection(@_);
+}
+
+sub VH__Call__Function {
+  my $func = shift;
+  my $ref;
+  my $ret;
+  if (!defined &{"main::$func"}) {
+    return 1;
+  }
+  no strict 'refs';
+  return &{"main::$func"}(@_);
+  use strict 'refs';
+  return $ret;
 }
 
 # Autoload methods go after =cut, and are processed by the autosplit program.

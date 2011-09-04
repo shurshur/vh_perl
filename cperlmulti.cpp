@@ -22,8 +22,8 @@
 #include "cperlmulti.h"
 #include "cperlinterpreter.h"
 
-namespace nScripts
-{
+namespace nVerliHub {
+	namespace nPerlPlugin {
 
 cPerlMulti::cPerlMulti()
 {
@@ -54,4 +54,5 @@ bool cPerlMulti::CallArgv(const char *Function, char * Args [] ) {
 	return true;
 }
 
-}; // namespace nScripts
+	}; // namespace nPerlPlugin
+}; // namespace nVerlihub
