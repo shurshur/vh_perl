@@ -117,7 +117,7 @@ sub VHDBConnect {
 
   $config->file("/home/verlihub-aliki/.verlihub/dbconfig");
 
-  my $dsn = "DBI:mysql:database=".config->db_data;
+  my $dsn = "DBI:mysql:database=".$config->db_data;
   if ($config->db_host) { $dsn.=";hostname=".$config->db_host; }
   my $dbh = DBI->connect($dsn, $config->db_user, $config->db_pass);
   $dbh->{'mysql_auto_reconnect'} = 1;
