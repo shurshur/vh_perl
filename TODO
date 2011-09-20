@@ -9,9 +9,6 @@ Missed Perl callbacks found in Lua plugin:
 	vh::GetHubIp
 	vh::GetHubSecAlias
 	vh::IsUserOnline
-	vh::SQLQuery
-	vh::SQLFetch
-	vh::SQLFree
 	vh::GetOPList
 	vh::GetBotList
 	vh::GetBots

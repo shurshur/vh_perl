@@ -44,6 +44,8 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	SendDataToAll
 	Disconnect
 	DisconnectByName
+
+	VHDBConnect
 ) ] );
 
 our @EXPORT_OK = ( "VH__Call__Function", @{ $EXPORT_TAGS{'all'} } );
@@ -79,6 +81,9 @@ sub AUTOLOAD {
 require XSLoader;
 XSLoader::load('vh', $VERSION);
 
+our $DBI_FOUND = 0;
+eval 'use DBI; $DBI_FOUND=1;';
+
 # Preloaded methods go here.
 
 sub SendToUser {
@@ -95,6 +100,30 @@ sub Disconnect {
 
 sub DisconnectByName {
   return CloseConnection(@_);
+}
+
+sub VHDBConnect {
+  if (!$DBI_FOUND) {
+    carp "No DBI found in your system. Install perl modules 'DBI' and 'DBD::mysql'";
+    return;
+  }
+
+  use AppConfig;
+  my $config = AppConfig->new({ERROR=>sub{}});
+
+  for my $k(qw(db_host db_user db_pass db_data db_charset)) {
+    $config->define("$k=s");
+  }
+
+  $config->file("/home/verlihub-aliki/.verlihub/dbconfig");
+
+  my $dsn = "DBI:mysql:database=".config->db_data;
+  if ($config->db_host) { $dsn.=";hostname=".$config->db_host; }
+  my $dbh = DBI->connect($dsn, $config->db_user, $config->db_pass);
+  $dbh->{'mysql_auto_reconnect'} = 1;
+  if($config->db_charset) { $dbh->do("SET NAMES ".$config->db_charset); }
+
+  return $dbh;
 }
 
 sub VH__Call__Function {
