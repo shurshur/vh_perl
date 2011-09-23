@@ -22,10 +22,18 @@
 ***************************************************************************/
 #include <config.h>
 #include "src/cserverdc.h"
+#include "src/cbanlist.h"
 #include "src/stringutils.h"
 #include "cpiperl.h"
 
 using namespace nVerliHub::nUtils;
+
+static const char * toString(int number)
+{
+	ostringstream os;
+	os << number;
+	return os.str().c_str();
+}
 
 nVerliHub::nPerlPlugin::cpiPerl::cpiPerl():
 mConsole(this)
@@ -301,6 +309,81 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnNewReg(cRegUserInfo *reginfo)
 bool nVerliHub::nPerlPlugin::cpiPerl::OnNewBan(cBan *ban)
 {
 	char *args[]= {		(char *)"VH_OnNewBan",
+				(char *)ban->mIP.c_str(),
+				(char *)ban->mNick.c_str(),
+				(char *)ban->mReason.c_str(),
+				NULL};
+	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	return ret;
+}
+
+bool nVerliHub::nPerlPlugin::cpiPerl::OnUnBan(std::string nick, std::string op, std::string reason)
+{
+	char *args[]= {		(char *)"VH_OnNewBan",
+				(char *) nick.c_str(),
+				(char *) op.c_str(),
+				(char *) reason.c_str(),
+				NULL};
+	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	return ret;
+}
+
+bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgConnectToMe(cConnDC *conn, cMessageDC *msg)
+{
+	bool ret = true;
+	if((conn != NULL) && (conn->mpUser != NULL) && (msg != NULL)) {
+		char * args[] = {	(char *)"VH_OnParsedMsgConnectToMe",
+					(char *)conn->mpUser->mNick.c_str(),
+					(char *)msg->ChunkString(eCH_CM_NICK).c_str(),
+					(char *)msg->ChunkString(eCH_CM_IP).c_str(),
+					(char *)msg->ChunkString(eCH_CM_PORT).c_str(),
+					NULL
+		}; // eCH_CM_NICK, eCH_CM_ACTIVE, eCH_CM_IP, eCH_CM_PORT
+		ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	}
+	return ret;
+}
+
+bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgRevConnectToMe(cConnDC *conn, cMessageDC *msg)
+{
+	bool ret = true;
+	if((conn != NULL) && (conn->mpUser != NULL) && (msg != NULL)) {
+		char * args[] = {	(char *)"VH_OnParsedMsgRevConnectToMe",
+					(char *)conn->mpUser->mNick.c_str(),
+					(char *)msg->ChunkString(eCH_RC_OTHER).c_str(),
+					NULL
+		}; // eCH_CM_NICK, eCH_CM_ACTIVE, eCH_CM_IP, eCH_CM_PORT
+		ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	}
+	return ret;
+}
+
+bool nVerliHub::nPerlPlugin::cpiPerl::OnDelReg(std::string mNick, int mClass)
+{
+	char *args[]= {		(char *)"VH_OnDelReg",
+				(char *) mNick.c_str(),
+				(char *) toString(mClass),
+				NULL};
+	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	return ret;
+}
+
+bool nVerliHub::nPerlPlugin::cpiPerl::OnUpdateClass(std::string mNick, int oldClass, int newClass)
+{
+	char *args[]= {		(char *)"VH_OnUpdateClass",
+				(char *) mNick.c_str(),
+				(char *) toString(oldClass),
+				(char *) toString(newClass),
+				NULL};
+	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	return ret;
+}
+
+bool nVerliHub::nPerlPlugin::cpiPerl::OnHubName(std::string nick, std::string hubname)
+{
+	char *args[]= {		(char *)"VH_OnHubName",
+				(char *) nick.c_str(),
+				(char *) hubname.c_str(),
 				NULL};
 	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
 	return ret;

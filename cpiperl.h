@@ -62,6 +62,12 @@ public:
 	virtual bool OnTimer();
 	virtual bool OnNewReg(cRegUserInfo *);
 	virtual bool OnNewBan(cBan *);
+	virtual bool OnUnBan(std::string, std::string, std::string);
+	virtual bool OnParsedMsgConnectToMe(cConnDC *, cMessageDC *);
+	virtual bool OnParsedMsgRevConnectToMe(cConnDC *, cMessageDC *);
+	virtual bool OnDelReg(std::string, int);
+	virtual bool OnUpdateClass(std::string, int, int);
+	virtual bool OnHubName(std::string, std::string);
 
 	int Size() { return mPerl.Size(); }
 
