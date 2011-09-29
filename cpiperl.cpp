@@ -25,6 +25,9 @@
 #include "src/cbanlist.h"
 #include "src/stringutils.h"
 #include "cpiperl.h"
+#include <dlfcn.h>
+
+#define WRAPPER_PATH "@CMAKE_INSTALL_PREFIX@/lib/libvh_perl_wrapper.so"
 
 using namespace nVerliHub::nUtils;
 
@@ -74,6 +77,12 @@ bool nVerliHub::nPerlPlugin::cpiPerl::RegisterAll()
 
 void nVerliHub::nPerlPlugin::cpiPerl::OnLoad(cServerDC* server)
 {
+	void* lib_handle = dlopen(WRAPPER_PATH, RTLD_LAZY | RTLD_GLOBAL);
+	if (!lib_handle) {
+		std::cerr << "Error during dlopen(libvh_perl_wrapper): " << dlerror() << "\n";
+		return;
+	}
+
 	cVHPlugin::OnLoad(server);
 
 	mScriptDir = mServer->mConfigBaseDir + "/scripts/";

@@ -16,16 +16,23 @@ SET(PERLSCRIPT_HDRS
 	cperlmulti.h
 )
 
+# cpiperl.cpp will be appended below
 SET(PERLSCRIPT_SRCS
-	cpiperl.cpp
 	cconsole.cpp
 	cperlinterpreter.cpp
 	cperlmulti.cpp
 )
+
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/cpiperl.cpp" "${CMAKE_CURRENT_BINARY_DIR}/cpiperl.cpp" @ONLY)
+LIST(APPEND PERLSCRIPT_SRCS "${CMAKE_CURRENT_BINARY_DIR}/cpiperl.cpp")
 
 ADD_LIBRARY(libperl_pi MODULE ${PERLSCRIPT_SRCS})
 SET_TARGET_PROPERTIES(libperl_pi PROPERTIES OUTPUT_NAME "perl_pi")
 find_library(PERL_LIBRARIES perl)
 target_link_libraries(libperl_pi ${PERL_LIBRARIES})
 
-INSTALL(TARGETS libperl_pi LIBRARY DESTINATION lib)
+ADD_LIBRARY(libvh_perl_wrapper MODULE "wrapper.c")
+SET_TARGET_PROPERTIES(libvh_perl_wrapper PROPERTIES OUTPUT_NAME "vh_perl_wrapper")
+target_link_libraries(libvh_perl_wrapper ${PERL_LIBRARIES})
+
+INSTALL(TARGETS libperl_pi libvh_perl_wrapper LIBRARY DESTINATION lib)
