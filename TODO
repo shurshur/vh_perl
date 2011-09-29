@@ -20,6 +20,3 @@ Missed Perl callbacks found in Lua plugin:
 Use Math::Int64 instead of double in GetTotalShareSize???
 Return vh::GetNickList as array
 Fix everytime rebuild of vh module in cmake
-
-!!! Fix bug with some C-modules (IO, Socket, DBD::*)!
-    Possible fix: link libperl to hub if perl plugin enabled.
