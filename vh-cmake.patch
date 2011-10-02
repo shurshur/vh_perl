@@ -9,3 +9,15 @@ index 39852ee..e270c46 100644
 +
 +ADD_PLUGIN(ENABLE_PLUGIN perl)
 +MACRO_LOG_FEATURE(ENABLE_PLUGIN "perl" "Allows you to use scripts written with Perl")
+diff --git a/share/sql/default_pi_plug.sql.in b/share/sql/default_pi_plug.sql.in
+index 676936f..f58240f 100644
+--- a/share/sql/default_pi_plug.sql.in
++++ b/share/sql/default_pi_plug.sql.in
+@@ -6,6 +6,7 @@ INSERT IGNORE INTO pi_plug (nick,autoload,path,detail) VALUES
+ 	("isp"    ,0,"@prefix@/lib/libisp_pi.so"   ,"Allows you to check connection types, nickname prefixes, and minimum shares, among other things"),
+ 	("lua"    ,0,"@prefix@/lib/liblua_pi.so"   ,"Allows you to use simple scripts written in LUA language (http://www.lua.org)"),
+ 	("msg"    ,0,"@prefix@/lib/libmessenger_pi.so","Send messages to offline users"),
++	("perl"   ,0,"@prefix@/lib/libperl_pi.so"  ,"Allows you to use scripts written with Perl (http://www.perl.org)"),
+ 	("python"   ,0,"@prefix@/lib/libpython_pi.so"  ,"Allows you to use scripts written with Python (http://www.python.org)"),
+ 	("replace",0,"@prefix@/lib/libreplace_pi.so","Replace given patterns in text messages"),
+ 	("stats"  ,0,"@prefix@/lib/libstats_pi.so","Periodically saves statistics in the database (i.e. users, share, upload, searching, etc...)")
