@@ -46,6 +46,12 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	DisconnectByName
 
 	VHDBConnect
+
+	GetUpTime
+	IsBot
+	IsUserOnline
+	GetHubIp
+	GetHubSecAlias
 ) ] );
 
 our @EXPORT_OK = ( "VH__Call__Function", @{ $EXPORT_TAGS{'all'} } );

@@ -6,9 +6,22 @@
 
 #include "const-c.inc"
 
+// perl macro IsSet conflicts with IsSet function in src/cconnselect.h
+#ifdef IsSet
+#undef IsSet
+#endif
+
 #include "src/script_api.h"
+#include "src/cconnchoose.h"
+using namespace nVerliHub::nEnums;
+#include "src/cserverdc.h"
 
 using namespace nVerliHub;
+using namespace nVerliHub::nSocket;
+
+cServerDC * GetCurrentVerlihub() {
+	return (cServerDC *)cServerDC::sCurrentServer;
+}
 
 bool Ban(char *nick, char *op, char *reason, unsigned howlong, unsigned bantype) {
 	return Ban(nick,string(op),string(reason),howlong,bantype);
@@ -134,3 +147,67 @@ GetTotalShareSize()
 
 char *
 GetVHCfgDir()
+
+int
+GetUpTime()
+CODE:
+	cServerDC *server = GetCurrentVerlihub();
+	if(server == NULL) {
+		croak("Error getting server");
+		RETVAL = -1;
+	} else {
+		cTime upTime;
+		upTime = server->mTime;
+		upTime -= server->mStartTime;
+		RETVAL = upTime.Sec();
+	}
+
+int
+IsBot(nick)
+	char *  nick
+CODE:
+	cServerDC *server = GetCurrentVerlihub();
+	if(server == NULL) {
+		croak("Error getting server");
+		RETVAL = -1;
+	} else {
+		cPluginRobot *robot = (cPluginRobot *)server->mUserList.GetUserByNick(nick);
+		RETVAL = (robot == NULL) ? 0 : 1;
+	}
+
+int
+IsUserOnline(nick)
+	char *  nick
+CODE:
+	cServerDC *server = GetCurrentVerlihub();
+	if(server == NULL) {
+		croak("Error getting server");
+		RETVAL = -1;
+	} else {
+		cUser *usr = server->mUserList.GetUserByNick(nick);
+		RETVAL = (usr == NULL) ? 0 : 1;
+	}
+
+char *
+GetHubIp(nick)
+	char *  nick
+PPCODE:
+	cServerDC *server = GetCurrentVerlihub();
+	if(server == NULL) {
+		croak("Error getting server");
+		XSRETURN_UNDEF;
+	}
+	char * addr = (char *)server->mAddr.c_str();
+	XPUSHs(sv_2mortal(newSVpv(addr, strlen(addr))));
+
+char *
+GetHubSecAlias(nick)
+	char *  nick
+PPCODE:
+	cServerDC *server = GetCurrentVerlihub();
+	if(server == NULL) {
+		croak("Error getting server");
+		XSRETURN_UNDEF;
+	}
+	char * hubsec = (char *)server->mC.hub_security.c_str();
+	XPUSHs(sv_2mortal(newSVpv(hubsec, strlen(hubsec))));
