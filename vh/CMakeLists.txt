@@ -9,6 +9,10 @@ EXECUTE_PROCESS(
       PERL_SITE_ARCH_RESULT
 )
 
+CONFIGURE_FILE(
+  "${CMAKE_CURRENT_SOURCE_DIR}/Makefile.PL.in"
+  "${CMAKE_CURRENT_SOURCE_DIR}/Makefile.PL")
+
 add_custom_target(vh_make ALL)
 add_custom_command(TARGET vh_make
   COMMAND perl Makefile.PL
