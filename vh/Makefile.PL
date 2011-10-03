@@ -14,7 +14,7 @@ WriteMakefile(
        AUTHOR     => 'Daniel Muller <dan at verliba dot cz>') : ()),
     'LIBS'		=> [''],
     'DEFINE'		=> '',
-    'INC'		=> '-I. -I/usr/include -I/usr/include/mysql -I/usr/include -I -I -I/usr/include',
+    'INC'		=> '-I. -I/home/shurik/work/verlihub.git/verlihub -I/usr/include -I/usr/include/mysql -I/usr/include -I -I -I/usr/include',
     'OBJECT'		=> '$(O_FILES) -lvhapi -lverlihub -lvhapi '.&ldopts,
     'CC'                => 'g++ -xc++',
     'LD'                => 'g++'

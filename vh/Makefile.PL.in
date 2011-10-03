@@ -14,7 +14,7 @@ WriteMakefile(
        AUTHOR     => 'Daniel Muller <dan at verliba dot cz>') : ()),
     'LIBS'		=> [''],
     'DEFINE'		=> '',
-    'INC'		=> '-I. @VERLIHUB_INCLUDE_DIRS@',
+    'INC'		=> '-I. -I@VERLIHUB_SOURCE_DIR@ @VERLIHUB_INCLUDE_DIRS@',
     'OBJECT'		=> '$(O_FILES) -lvhapi @VERLIHUB_SCRIPTS_LIBS@ '.&ldopts,
     'CC'                => 'g++ -xc++',
     'LD'                => 'g++'

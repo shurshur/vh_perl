@@ -6,7 +6,8 @@
 
 #include "const-c.inc"
 
-#include <verlihub/script_api.h>
+#include "src/script_api.h"
+
 using namespace nVerliHub;
 
 bool Ban(char *nick, char *op, char *reason, unsigned howlong, unsigned bantype) {
