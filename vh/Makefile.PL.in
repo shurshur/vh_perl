@@ -15,7 +15,7 @@ WriteMakefile(
     'LIBS'		=> [''],
     'DEFINE'		=> '',
     'INC'		=> '-I. -I@VERLIHUB_SOURCE_DIR@ @VERLIHUB_INCLUDE_DIRS@',
-    'OBJECT'		=> '$(O_FILES) -lvhapi @VERLIHUB_SCRIPTS_LIBS@ '.&ldopts,
+    'OBJECT'		=> '$(O_FILES) -L@VERLIHUB_SOURCE_DIR@/src -lvhapi @VERLIHUB_SCRIPTS_LIBS@ '.&ldopts,
     'CC'                => 'g++ -xc++',
     'LD'                => 'g++'
 );

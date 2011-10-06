@@ -121,7 +121,7 @@ sub VHDBConnect {
     $config->define("$k=s");
   }
 
-  $config->file("/home/verlihub-aliki/.verlihub/dbconfig");
+  $config->file(vh::GetVHCfgDir()."/dbconfig");
 
   my $dsn = "DBI:mysql:database=".$config->db_data;
   if ($config->db_host) { $dsn.=";hostname=".$config->db_host; }
