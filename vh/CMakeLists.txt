@@ -11,7 +11,11 @@ EXECUTE_PROCESS(
 
 CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/Makefile.PL.in"
-  "${CMAKE_CURRENT_SOURCE_DIR}/Makefile.PL")
+  "${CMAKE_CURRENT_BINARY_DIR}/Makefile.PL")
+
+CONFIGURE_FILE(
+  "${CMAKE_CURRENT_SOURCE_DIR}/vh.pm"
+  "${CMAKE_CURRENT_BINARY_DIR}/vh.pm")
 
 add_custom_target(vh_make ALL)
 add_custom_command(TARGET vh_make
