@@ -11,7 +11,27 @@ Missed Perl callbacks found in Lua plugin:
 	vh::SetTempRights
 	vh::GetTopic
 	vh::SetTopic
+	vh::GetIPCC
+	vh::GetIPCN
+	vh::InUserSupports
+	vh::ReportUser
+	vh::ScriptCommand
+	vh::SendToOpChat
+	vh::StopHub
+
+Missed event handlers found in Lua plugin
+	VH_OnCloseConnEx
+	VH_OnFirstMyINFO
+	VH_OnHubCommand
+	VH_OnParsedMsgAnyEx
+	VH_OnParsedMsgBotINFO
+	VH_OnParsedMsgMCTo
+	VH_OnParsedMsgVersion
+	VH_OnScriptCommand
+	VH_OnUnBan
 
 Use Math::Int64 instead of double in GetTotalShareSize???
 Return vh::GetNickList as array
 Fix everytime rebuild of vh module in cmake
+
+!!! Disable plugin after reload to avoid crash
