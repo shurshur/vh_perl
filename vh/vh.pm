@@ -37,6 +37,7 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	GetConfig
 	GetUsersCount
 	GetNickList
+	GetOPList
 	GetTotalShareSize
 	GetVHCfgDir
 
@@ -46,6 +47,9 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	DisconnectByName
 
 	VHDBConnect
+	SQLQuery
+	SQLFetch
+	SQLFree
 
 	GetUpTime
 	IsBot

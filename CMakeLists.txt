@@ -31,7 +31,7 @@ SET_TARGET_PROPERTIES(libperl_pi PROPERTIES OUTPUT_NAME "perl_pi")
 find_library(PERL_LIBRARIES perl)
 target_link_libraries(libperl_pi ${PERL_LIBRARIES})
 
-ADD_LIBRARY(libvh_perl_wrapper MODULE "wrapper.c")
+ADD_LIBRARY(libvh_perl_wrapper MODULE "wrapper.cpp")
 SET_TARGET_PROPERTIES(libvh_perl_wrapper PROPERTIES OUTPUT_NAME "vh_perl_wrapper")
 target_link_libraries(libvh_perl_wrapper ${PERL_LIBRARIES})
 

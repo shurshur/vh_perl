@@ -6,22 +6,12 @@
 
 #include "const-c.inc"
 
-// perl macro IsSet conflicts with IsSet function in src/cconnselect.h
-#ifdef IsSet
-#undef IsSet
-#endif
-
 #include "src/script_api.h"
-#include "src/cconnchoose.h"
-using namespace nVerliHub::nEnums;
-#include "src/cserverdc.h"
+#include "src/cmysql.h"
+#include "../wrapper.h"
 
 using namespace nVerliHub;
-using namespace nVerliHub::nSocket;
-
-cServerDC * GetCurrentVerlihub() {
-	return (cServerDC *)cServerDC::sCurrentServer;
-}
+using namespace nVerliHub::nPerlPlugin::nWrapper;
 
 bool Ban(char *nick, char *op, char *reason, unsigned howlong, unsigned bantype) {
 	return Ban(nick,string(op),string(reason),howlong,bantype);
@@ -78,9 +68,11 @@ char *
 GetUserIP(nick)
 	char *	nick
 
-char *
-ParseCommand(command_line)
+bool
+ParseCommand(command_line, nick, pm)
 	char *	command_line
+	char *	nick
+	int	pm
 
 bool
 SendToClass(data, min_class, max_class)
@@ -142,6 +134,9 @@ GetUsersCount()
 char *
 GetNickList()
 
+char *
+GetOPList()
+
 double
 GetTotalShareSize()
 
@@ -150,64 +145,45 @@ GetVHCfgDir()
 
 int
 GetUpTime()
-CODE:
-	cServerDC *server = GetCurrentVerlihub();
-	if(server == NULL) {
-		croak("Error getting server");
-		RETVAL = -1;
-	} else {
-		cTime upTime;
-		upTime = server->mTime;
-		upTime -= server->mStartTime;
-		RETVAL = upTime.Sec();
-	}
 
 int
 IsBot(nick)
 	char *  nick
-CODE:
-	cServerDC *server = GetCurrentVerlihub();
-	if(server == NULL) {
-		croak("Error getting server");
-		RETVAL = -1;
-	} else {
-		cPluginRobot *robot = (cPluginRobot *)server->mUserList.GetUserByNick(nick);
-		RETVAL = (robot == NULL) ? 0 : 1;
-	}
 
 int
 IsUserOnline(nick)
 	char *  nick
-CODE:
-	cServerDC *server = GetCurrentVerlihub();
-	if(server == NULL) {
-		croak("Error getting server");
-		RETVAL = -1;
-	} else {
-		cUser *usr = server->mUserList.GetUserByNick(nick);
-		RETVAL = (usr == NULL) ? 0 : 1;
-	}
 
 char *
-GetHubIp(nick)
-	char *  nick
+GetHubIp()
 PPCODE:
-	cServerDC *server = GetCurrentVerlihub();
-	if(server == NULL) {
-		croak("Error getting server");
-		XSRETURN_UNDEF;
-	}
-	char * addr = (char *)server->mAddr.c_str();
+	char * addr = GetHubIp();
 	XPUSHs(sv_2mortal(newSVpv(addr, strlen(addr))));
 
 char *
-GetHubSecAlias(nick)
-	char *  nick
+GetHubSecAlias()
 PPCODE:
-	cServerDC *server = GetCurrentVerlihub();
-	if(server == NULL) {
-		croak("Error getting server");
+	char * hubsec = GetHubSecAlias();
+	XPUSHs(sv_2mortal(newSVpv(hubsec, strlen(hubsec))));
+
+int
+SQLQuery(query)
+	char *	query
+
+void
+SQLFetch(r)
+	int	r
+PPCODE:
+	int cols;
+	MYSQL_ROW row = SQLFetch(r,cols);
+	if(!row) {
+		croak("Error fetching row");
 		XSRETURN_UNDEF;
 	}
-	char * hubsec = (char *)server->mC.hub_security.c_str();
-	XPUSHs(sv_2mortal(newSVpv(hubsec, strlen(hubsec))));
+	for(int i=0; i<cols; i++)
+		if(row[i])
+			XPUSHs(sv_2mortal(newSVpv(row[i],strlen(row[i]))));
+		else
+			XPUSHs(&PL_sv_undef);
+
+int SQLFree()

@@ -33,9 +33,9 @@ ADD_CUSTOM_COMMAND(
 
 INSTALL(
   FILES
-    blib/arch/auto/vh/vh.so
-    blib/arch/auto/vh/vh.bs
-    blib/lib/auto/vh/autosplit.ix
+    ${CMAKE_CURRENT_BINARY_DIR}/blib/arch/auto/vh/vh.so
+    ${CMAKE_CURRENT_BINARY_DIR}/blib/arch/auto/vh/vh.bs
+    ${CMAKE_CURRENT_BINARY_DIR}/blib/lib/auto/vh/autosplit.ix
   DESTINATION
     ${PERL_SITE_ARCH}/auto/vh/)
 

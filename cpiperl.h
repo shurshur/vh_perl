@@ -2,7 +2,7 @@
 *   Copyright (C) 2003 by Dan Muller                                      *
 *   dan at verliba.cz                                                     *
 *                                                                         *
-*   Copyright (C) 2011 by Shurik                                          *
+*   Copyright (C) 2011-2013 by Shurik                                     *
 *   shurik at sbin.ru                                                     *
 *                                                                         *
 *   This program is free software; you can redistribute it and/or modify  *
@@ -59,7 +59,7 @@ public:
 	virtual bool OnUserCommand(cConnDC *, std::string *);
 	virtual bool OnUserLogin(cUser *);
 	virtual bool OnUserLogout(cUser *);
-	virtual bool OnTimer();
+	virtual bool OnTimer(long);
 	virtual bool OnNewReg(cRegUserInfo *);
 	virtual bool OnNewBan(cBan *);
 	virtual bool OnUnBan(std::string, std::string, std::string);
@@ -70,6 +70,8 @@ public:
 	virtual bool OnHubName(std::string, std::string);
 
 	int Size() { return mPerl.Size(); }
+
+	nMySQL::cQuery *mQuery;
 
 private:
 	cConsole mConsole;

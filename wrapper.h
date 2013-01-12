@@ -1,5 +1,5 @@
 /**************************************************************************
-*   Copyright (C) 2011 by Shurik                                          *
+*   Copyright (C) 2011-2013 by Shurik                                     *
 *   shurik at sbin.ru                                                     *
 *                                                                         *
 *   This program is free software; you can redistribute it and/or modify  *
@@ -18,4 +18,20 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 
-// libperl wrapper for Verlihub PerlScript plugin
+namespace nVerliHub {
+namespace nPerlPlugin {
+namespace nWrapper {
+
+int SQLQuery(char *query);
+MYSQL_ROW SQLFetch(int r, int &cols);
+int SQLFree();
+int IsUserOnline(char *nick);
+int IsBot(char *nick);
+int GetUpTime();
+char *GetHubIp();
+char *GetHubSecAlias();
+char *GetOPList();
+
+} // nVerliHub
+} // nPerlPlugin
+} // nWrapper

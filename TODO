@@ -4,7 +4,6 @@ Missed Perl callbacks found in Lua plugin:
 	vh::AddRobot
 	vh::DelRobot
 	vh::EditBot
-	vh::GetOPList
 	vh::GetBotList
 	vh::GetBots
 	vh::GetTempRights
@@ -34,4 +33,4 @@ Use Math::Int64 instead of double in GetTotalShareSize???
 Return vh::GetNickList as array
 Fix everytime rebuild of vh module in cmake
 
-!!! Disable plugin after reload to avoid crash
+Disable plugin after reload to avoid crash <- possible fixed by dlclose(lib_handle) in cpiperl.cpp???

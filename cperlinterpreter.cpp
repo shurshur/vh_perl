@@ -2,7 +2,7 @@
 *   Copyright (C) 2003 by Dan Muller                                      *
 *   dan at verliba.cz                                                     *
 *                                                                         *
-*   Copyright (C) 2011 by Shurik                                          *
+*   Copyright (C) 2011-2013 by Shurik                                     *
 *   shurik at sbin.ru                                                     *
 *                                                                         *
 *   This program is free software; you can redistribute it and/or modify  *
@@ -29,8 +29,6 @@ using namespace std;
 
 EXTERN_C void xs_init (pTHX);
 EXTERN_C void boot_DynaLoader (pTHX_ CV* cv);
-//EXTERN_C void boot_VHPerlExt (pTHX_ CV* cv);
-//EXTERN_C void boot_vh (pTHX_ CV* cv);
 
 namespace nVerliHub {
 	namespace nPerlPlugin {
@@ -122,8 +120,6 @@ EXTERN_C void xs_init(pTHX)
 	std::string file = __FILE__;
 	/* DynaLoader is a special case */
 	newXS("DynaLoader::boot_DynaLoader", boot_DynaLoader, file.c_str());
-	//newXS("VHPerlExt::bootstrap", boot_VHPerlExt, file.c_str());
-	//newXS("vh::bootstrap", boot_vh, file.c_str());
 }
 
 

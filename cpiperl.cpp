@@ -31,6 +31,8 @@
 
 using namespace nVerliHub::nUtils;
 
+static void * lib_handle;
+
 static const char * toString(int number)
 {
 	ostringstream os;
@@ -39,14 +41,21 @@ static const char * toString(int number)
 }
 
 nVerliHub::nPerlPlugin::cpiPerl::cpiPerl():
-mConsole(this)
+mConsole(this), mQuery(NULL)
 {
 	mName = "PerlScript";
 	mVersion= PERLSCRIPT_VERSION;
 }
 
 nVerliHub::nPerlPlugin::cpiPerl::~cpiPerl()
-{}
+{
+	if(mQuery) {
+		mQuery->Clear();
+		delete mQuery;
+	}
+
+	dlclose(lib_handle);
+}
 
 bool nVerliHub::nPerlPlugin::cpiPerl::RegisterAll()
 {
@@ -77,13 +86,15 @@ bool nVerliHub::nPerlPlugin::cpiPerl::RegisterAll()
 
 void nVerliHub::nPerlPlugin::cpiPerl::OnLoad(cServerDC* server)
 {
-	void* lib_handle = dlopen(WRAPPER_PATH, RTLD_LAZY | RTLD_GLOBAL);
+	lib_handle = dlopen(WRAPPER_PATH, RTLD_LAZY | RTLD_GLOBAL);
 	if (!lib_handle) {
 		std::cerr << "Error during dlopen(libvh_perl_wrapper): " << dlerror() << "\n";
 		return;
 	}
 
 	cVHPlugin::OnLoad(server);
+
+	mQuery = new nMySQL::cQuery(server->mMySQL);
 
 	mScriptDir = mServer->mConfigBaseDir + "/scripts/";
 
@@ -299,9 +310,12 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnUserLogout(cUser *user)
 	return ret;
 }
 
-bool nVerliHub::nPerlPlugin::cpiPerl::OnTimer()
+bool nVerliHub::nPerlPlugin::cpiPerl::OnTimer(long msec)
 {
+	std::stringstream s;
+	s << msec;
 	char *args[]= {		(char *)"VH_OnTimer",
+				(char *)s.str().c_str(),
 				NULL };
 	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
 	return ret;
