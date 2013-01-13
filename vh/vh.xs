@@ -8,7 +8,7 @@
 
 #include "src/script_api.h"
 #include "src/cmysql.h"
-#include "../wrapper.h"
+#include "plugins/perl/wrapper.h"
 
 using namespace nVerliHub;
 using namespace nVerliHub::nPerlPlugin::nWrapper;
