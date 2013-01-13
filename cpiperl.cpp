@@ -49,6 +49,9 @@ mConsole(this), mQuery(NULL)
 
 nVerliHub::nPerlPlugin::cpiPerl::~cpiPerl()
 {
+	char *args[] = { (char *)"UnLoad", NULL };
+	mPerl.CallArgv("vh::VH__Call__Function", args);
+
 	if(mQuery) {
 		mQuery->Clear();
 		delete mQuery;
