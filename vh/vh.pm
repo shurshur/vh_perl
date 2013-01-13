@@ -24,6 +24,11 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	GetMyINFO
 	AddRegUser
 	DelRegUser
+	RegBot
+	UnRegBot
+	AddRobot
+	DelRobot
+	EditBot
 	GetUserClass
 	GetUserHost
 	GetUserIP
@@ -38,6 +43,8 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	GetUsersCount
 	GetNickList
 	GetOPList
+	GetBotList
+	GetBots
 	GetTotalShareSize
 	GetVHCfgDir
 
@@ -110,6 +117,18 @@ sub Disconnect {
 
 sub DisconnectByName {
   return CloseConnection(@_);
+}
+
+sub GetBots {
+  carp "Perl Script plugin doesn't support GetBots!";
+}
+
+sub AddRobot {
+  return RegBot(@_);
+}
+
+sub DelRobot {
+  return UnRegBot(@_);
 }
 
 sub VHDBConnect {

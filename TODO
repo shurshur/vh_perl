@@ -1,11 +1,4 @@
 Missed Perl callbacks found in Lua plugin:
-	vh::RegBot
-	vh::UnRegBot
-	vh::AddRobot
-	vh::DelRobot
-	vh::EditBot
-	vh::GetBotList
-	vh::GetBots
 	vh::GetTempRights
 	vh::SetTempRights
 	vh::GetTopic

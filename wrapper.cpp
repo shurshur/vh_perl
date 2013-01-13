@@ -106,3 +106,71 @@ char *nVerliHub::nPerlPlugin::nWrapper::GetOPList() {
 	cServerDC *server = GetCurrentVerlihub();
 	return (char*)server->mOpList.GetNickList().c_str();
 }
+
+char *nVerliHub::nPerlPlugin::nWrapper::GetBotList() {
+	cServerDC *server = GetCurrentVerlihub();
+	return (char*)server->mRobotList.GetNickList().c_str();
+}
+
+
+bool nVerliHub::nPerlPlugin::nWrapper::RegBot(char *nick, int uclass, char *desc, char *speed, char *email, char *share) {
+	cServerDC *server = GetCurrentVerlihub();
+	cpiPerl *pi = GetPI();
+
+	cPluginRobot *robot = pi->NewRobot(nick, uclass);
+
+	if(robot != NULL) {
+		server->mP.Create_MyINFO(robot->mMyINFO, robot->mNick, desc, speed, email, share);
+		robot->mMyINFO_basic = robot->mMyINFO;
+
+		//pi->mPerl.addBot(nick, share, (char *) robot->mMyINFO.c_str(), uclass);
+		string omsg = "$Hello ";
+		omsg+= robot->mNick;
+		server->mHelloUsers.SendToAll(omsg, server->mC.delayed_myinfo, true);
+		omsg = server->mP.GetMyInfo(robot, eUC_NORMUSER);
+		server->mUserList.SendToAll(omsg, true, true);
+		if(uclass >= 3)
+			server->mUserList.SendToAll(server->mOpList.GetNickList(), true);
+	} else {
+	    // error: "Error adding bot; it may already exist"
+	    return false;
+	}
+	return true;
+}
+
+bool nVerliHub::nPerlPlugin::nWrapper::EditBot(char *nick, int uclass, char *desc, char *speed, char *email, char *share) {
+	cServerDC *server = GetCurrentVerlihub();
+	cpiPerl *pi = GetPI();
+	cUserRobot *robot = (cUserRobot*) server->mRobotList.GetUserBaseByNick(nick);
+
+	if(robot != NULL) {
+		//Clear myinfo
+		robot->mMyINFO = "";
+		server->mP.Create_MyINFO(robot->mMyINFO, robot->mNick, desc, speed, email, share);
+		robot->mMyINFO_basic = robot->mMyINFO;
+		//pi->mPerl.editBot(nick, share, (char *) robot->mMyINFO.c_str(), uclass);
+		string omsg = server->mP.GetMyInfo(robot, eUC_NORMUSER);
+		server->mUserList.SendToAll(omsg, false, true);
+		if(uclass >= 3)
+			server->mUserList.SendToAll(server->mOpList.GetNickList(), true);
+	} else {
+		// error: "???"
+		return false;
+	}
+	return true;
+}
+
+bool nVerliHub::nPerlPlugin::nWrapper::UnRegBot(char *nick) {
+	cServerDC *server = GetCurrentVerlihub();
+	cpiPerl *pi = GetPI();
+
+	cPluginRobot *robot = (cPluginRobot *)server->mUserList.GetUserByNick(nick);
+	if(robot != NULL) {
+		//pi->mPerl.delBot(nick);
+		pi->DelRobot(robot);
+	} else {
+		// error: "Bot doesn't exist"
+	    return false;
+	}
+	return true;
+}

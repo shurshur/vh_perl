@@ -56,6 +56,25 @@ bool
 DelRegUser(nick)
 	char * nick
 
+bool RegBot(nick, uclass, desc, speed, email, share)
+	char *	nick
+	int	uclass
+	char *	desc
+	char *	speed
+	char *	email
+	char *	share
+
+bool EditBot(nick, uclass, desc, speed, email, share)
+	char *	nick
+	int	uclass
+	char *	desc
+	char *	speed
+	char *	email
+	char *	share
+
+bool UnRegBot(nick)
+	char *	nick
+
 int
 GetUserClass(nick)
 	char *	nick
@@ -136,6 +155,9 @@ GetNickList()
 
 char *
 GetOPList()
+
+char *
+GetBotList()
 
 double
 GetTotalShareSize()

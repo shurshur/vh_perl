@@ -31,6 +31,10 @@ int GetUpTime();
 char *GetHubIp();
 char *GetHubSecAlias();
 char *GetOPList();
+char *GetBotList();
+bool RegBot(char *nick, int uclass, char *desc, char *speed, char *email, char *share);
+bool EditBot(char *nick, int uclass, char *desc, char *speed, char *email, char *share);
+bool UnRegBot(char *nick);
 
 } // nVerliHub
 } // nPerlPlugin
