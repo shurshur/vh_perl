@@ -63,6 +63,7 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	IsUserOnline
 	GetHubIp
 	GetHubSecAlias
+	StopHub
 ) ] );
 
 our @EXPORT_OK = ( "VH__Call__Function", @{ $EXPORT_TAGS{'all'} } );

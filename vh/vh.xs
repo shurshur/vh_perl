@@ -209,3 +209,6 @@ PPCODE:
 			XPUSHs(&PL_sv_undef);
 
 int SQLFree()
+
+bool StopHub(code)
+	int code
