@@ -9,7 +9,6 @@ Missed Perl callbacks found in Lua plugin:
 	vh::ReportUser
 	vh::ScriptCommand
 	vh::SendToOpChat
-	vh::StopHub
 
 Missed event handlers found in Lua plugin
 	VH_OnCloseConnEx
@@ -25,5 +24,3 @@ Missed event handlers found in Lua plugin
 Use Math::Int64 instead of double in GetTotalShareSize???
 Return vh::GetNickList as array
 Fix everytime rebuild of vh module in cmake
-
-Disable plugin after reload to avoid crash <- possible fixed by dlclose(lib_handle) in cpiperl.cpp???
