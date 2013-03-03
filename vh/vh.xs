@@ -8,10 +8,10 @@
 
 #include "src/script_api.h"
 #include "src/cmysql.h"
-#include "plugins/perl/wrapper.h"
+#include "plugins/perl/callbacks.h"
 
 using namespace nVerliHub;
-using namespace nVerliHub::nPerlPlugin::nWrapper;
+using namespace nVerliHub::nPerlPlugin::nCallback;
 
 bool Ban(char *nick, char *op, char *reason, unsigned howlong, unsigned bantype) {
 	return Ban(nick,string(op),string(reason),howlong,bantype);
