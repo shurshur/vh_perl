@@ -12,7 +12,7 @@ my $botname;
 
 sub Main {
   $dbh = vh::VHDBConnect;
-  $botname = "_PERLBOT_".vh::GetConfig("config", "hub_security");
+  $botname = vh::GetConfig("config", "hub_security");
 
   return 1;
 }
