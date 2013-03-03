@@ -172,67 +172,82 @@ sub VH__Call__Function {
 
 1;
 __END__
-# Below is stub documentation for your module. You'd better edit it!
 
 =head1 NAME
 
-vh - Perl extension for blah blah blah
+vh - Perl extension for use in Verlihub Perl scripts.
 
 =head1 SYNOPSIS
 
+Sample script:
+
   use vh;
-  blah blah blah
+
+  my $dbh;
+  my $botname;
+
+  sub Main {
+    $dbh = vh::VHDBConnect;
+
+    $botname = vh::GetConfig("config", "hub_security");
+
+    return 1;
+  }
+
+  sub VH_OnOperatorCommand {
+    my $nick = shift;
+    my $data = shift;
+  
+    if ($data =~ /^\!regscount\s*$/) {
+      my $sth = $dbh->prepare("SELECT class, COUNT(nick) FROM reglist GROUP BY class ORDER BY class ASC");
+      $sth->execute;
+
+      my $s = "<$botname>\n\n";
+      while(my ($c,$q) = $sth->fetchrow_array) {
+        $s .= "class:$c users:$q\n";
+      }
+      $sth->finish;
+
+      vh::SendToUser($s."|", $nick);
+      return 0;
+    }
+    return 1;
+  }
 
 =head1 ABSTRACT
 
-  This should be the abstract for vh.
-  The abstract is used when making PPD (Perl Package Description) files.
-  If you don't want an ABSTRACT you should also edit Makefile.PL to
-  remove the ABSTRACT_FROM option.
+  Perl extension for use in Verlihub Perl scripts.
 
 =head1 DESCRIPTION
 
-Stub documentation for vh, created by h2xs. It looks like the
-author of the extension was negligent enough to leave the stub
-unedited.
+You may use these callbacks from your scripts.
 
-Blah blah blah.
-
-=head2 EXPORT
-
-None by default.
-
-=head2 Exportable functions
+  //TODO&FIXME
 
   bool Ban(char *nick, char *op, char *nick, unsigned howlong, int bantype)
   bool CloseConnection(char *nick)
   char *GetMyINFO(char *nick)
-  char * ParseCommand(char *command_line)
+  char *ParseCommand(char *command_line)
   bool SendDataToAll(char *data, int min_class, int max_class)
   bool SendDataToUser(char *data, char *nick)
 
-
-
 =head1 SEE ALSO
 
-Mention other useful documentation such as the documentation of
-related modules or operating system documentation (such as man pages
-in UNIX), or any relevant external documentation such as RFCs or
-standards.
+See PerlScript plugin documentation and demo scripts for more information.
 
-If you have a mailing list set up for your module, mention it here.
+=head1 AUTHORS
 
-If you have a web site set up for your module, mention it here.
+Daniel Muller E<lt>dan at verliba dot czE<gt>
 
-=head1 AUTHOR
-
-Daniel Muller, E<lt>dan@localdomainE<gt>
+Shurik E<lt>shurik at sbin dot ruE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
 Copyright 2004 by Daniel Muller
 
+Copyright 2011-2013 by Shurik
+
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself. 
+it under the terms of GNU General Public License version 2 or later. 
 
 =cut
