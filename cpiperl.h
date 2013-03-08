@@ -42,14 +42,21 @@ public:
 	virtual bool RegisterAll();
 	virtual bool OnNewConn(cConnDC *);
 	virtual bool OnCloseConn(cConnDC *);
+	virtual bool OnCloseConnEx(cConnDC *);
 	virtual bool OnParsedMsgChat(cConnDC *, cMessageDC *);
 	virtual bool OnParsedMsgPM(cConnDC *, cMessageDC *);
+	virtual bool OnParsedMsgMCTo(cConnDC *, cMessageDC *);
 	virtual bool OnParsedMsgSearch(cConnDC *, cMessageDC *);
 	virtual bool OnParsedMsgSR(cConnDC *, cMessageDC *);
 	virtual bool OnParsedMsgMyINFO(cConnDC *, cMessageDC *);
+	virtual bool OnFirstMyINFO(cConnDC *, cMessageDC *);
 	virtual bool OnParsedMsgValidateNick(cConnDC *, cMessageDC *);
 	virtual bool OnParsedMsgAny(cConnDC *, cMessageDC *);
+	virtual bool OnParsedMsgAnyEx(cConnDC *, cMessageDC *);
+	virtual bool OnUnknownMsg(cConnDC *, cMessageDC *);
 	virtual bool OnParsedMsgSupport(cConnDC *, cMessageDC *);
+	virtual bool OnParsedMsgBotINFO(cConnDC *, cMessageDC *);
+	virtual bool OnParsedMsgVersion(cConnDC *, cMessageDC *);
 	virtual bool OnParsedMsgMyPass(cConnDC *, cMessageDC *);
 	//virtual bool OnUnknownMsg(cConnDC *, cMessageDC *);
 	virtual bool OnOperatorCommand(cConnDC *, std::string *);
@@ -57,6 +64,7 @@ public:
 	virtual bool OnOperatorDrops(cUser *, cUser *);
 	virtual bool OnValidateTag(cConnDC *, cDCTag *);
 	virtual bool OnUserCommand(cConnDC *, std::string *);
+	virtual bool OnHubCommand(cConnDC *, std::string *, int, int);
 	virtual bool OnUserLogin(cUser *);
 	virtual bool OnUserLogout(cUser *);
 	virtual bool OnTimer(long);
@@ -68,6 +76,7 @@ public:
 	virtual bool OnDelReg(std::string, int);
 	virtual bool OnUpdateClass(std::string, int, int);
 	virtual bool OnHubName(std::string, std::string);
+	virtual bool OnScriptCommand(std::string, std::string, std::string, std::string);
 
 	int Size() { return mPerl.Size(); }
 
