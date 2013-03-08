@@ -1,14 +1,7 @@
 Missed Perl callbacks found in Lua plugin:
 	vh::GetTempRights
 	vh::SetTempRights
-	vh::GetTopic
-	vh::SetTopic
-	vh::GetIPCC
-	vh::GetIPCN
-	vh::InUserSupports
-	vh::ReportUser
 	vh::ScriptCommand
-	vh::SendToOpChat
 
 Use Math::Int64 instead of double in GetTotalShareSize???
 Return vh::GetNickList as array

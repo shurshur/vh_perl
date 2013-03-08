@@ -64,6 +64,13 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	GetHubIp
 	GetHubSecAlias
 	StopHub
+	GetTopic
+	SetTopic
+	GetIPCC
+	GetIPCN
+	InUserSupports
+	ReportUser
+	SendToOpChat
 ) ] );
 
 our @EXPORT_OK = ( "VH__Call__Function", @{ $EXPORT_TAGS{'all'} } );

@@ -208,7 +208,44 @@ PPCODE:
 		else
 			XPUSHs(&PL_sv_undef);
 
-int SQLFree()
+int
+SQLFree()
 
-bool StopHub(code)
+bool
+StopHub(code)
 	int code
+
+const char *
+GetTopic()
+
+bool
+SetTopic(topic)
+	char * topic
+
+char *
+GetIPCC(ip)
+	char * ip
+PPCODE:
+	const char * cc = GetIPCC(ip).c_str();
+	XPUSHs(sv_2mortal(newSVpv(cc, strlen(cc))));
+
+char *
+GetIPCN(ip)
+	char * ip
+PPCODE:
+	const char * cn = GetIPCN(ip).c_str();
+	XPUSHs(sv_2mortal(newSVpv(cn, strlen(cn))));
+
+bool
+InUserSupports(nick, flag)
+	char * nick
+	char * flag
+
+bool
+ReportUser(nick, msg)
+	char * nick
+	char * msg
+
+bool
+SendToOpChat(msg)
+	char * msg

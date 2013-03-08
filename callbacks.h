@@ -35,6 +35,11 @@ char *GetBotList();
 bool RegBot(char *nick, int uclass, char *desc, char *speed, char *email, char *share);
 bool EditBot(char *nick, int uclass, char *desc, char *speed, char *email, char *share);
 bool UnRegBot(char *nick);
+bool SetTopic(char *topic);
+const char *GetTopic();
+bool InUserSupports(char *nick, char *flag);
+bool ReportUser(char *nick, char *msg);
+bool SendToOpChat(char *msg);
 
 } // nVerliHub
 } // nPerlPlugin

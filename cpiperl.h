@@ -58,7 +58,6 @@ public:
 	virtual bool OnParsedMsgBotINFO(cConnDC *, cMessageDC *);
 	virtual bool OnParsedMsgVersion(cConnDC *, cMessageDC *);
 	virtual bool OnParsedMsgMyPass(cConnDC *, cMessageDC *);
-	//virtual bool OnUnknownMsg(cConnDC *, cMessageDC *);
 	virtual bool OnOperatorCommand(cConnDC *, std::string *);
 	virtual bool OnOperatorKicks(cUser *, cUser *, std::string *);
 	virtual bool OnOperatorDrops(cUser *, cUser *);

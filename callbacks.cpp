@@ -174,3 +174,63 @@ bool nVerliHub::nPerlPlugin::nCallback::UnRegBot(char *nick) {
 	}
 	return true;
 }
+
+const char *nVerliHub::nPerlPlugin::nCallback::GetTopic() {
+	cServerDC *server = GetCurrentVerlihub();
+	return server->mC.hub_topic.c_str();
+}
+
+bool nVerliHub::nPerlPlugin::nCallback::SetTopic(char *_topic) {
+	cServerDC *server = GetCurrentVerlihub();
+	std::string topic = _topic;
+	std::string message;
+	cDCProto::Create_HubName(message, server->mC.hub_name, topic);
+	server->SendToAll(message, eUC_NORMUSER, eUC_MASTER);
+	return true;
+}
+
+bool nVerliHub::nPerlPlugin::nCallback::InUserSupports(char *nick, char *_flag) {
+	cServerDC *serv = GetCurrentVerlihub();
+	std::string flag = _flag;
+	cUser *usr = serv->mUserList.GetUserByNick(nick);
+	if ((usr==NULL) || (usr->mxConn == NULL))
+		return false;
+	if (
+		((flag == "OpPlus") && (usr->mxConn->mFeatures & eSF_OPPLUS)) ||
+		((flag == "NoHello") && (usr->mxConn->mFeatures & eSF_NOHELLO)) ||
+		((flag == "NoGetINFO") && (usr->mxConn->mFeatures & eSF_NOGETINFO)) ||
+		((flag == "DHT0") && (usr->mxConn->mFeatures & eSF_DHT0)) ||
+		((flag == "QuickList") && (usr->mxConn->mFeatures & eSF_QUICKLIST)) ||
+		((flag == "BotINFO") && (usr->mxConn->mFeatures & eSF_BOTINFO)) ||
+		(((flag == "ZPipe0") || (flag == "ZPipe")) && (usr->mxConn->mFeatures & eSF_ZLIB)) ||
+		((flag == "ChatOnly") && (usr->mxConn->mFeatures & eSF_CHATONLY)) ||
+		((flag == "MCTo") && (usr->mxConn->mFeatures & eSF_MCTO)) ||
+		((flag == "UserCommand") && (usr->mxConn->mFeatures & eSF_USERCOMMAND)) ||
+		((flag == "BotList") && (usr->mxConn->mFeatures & eSF_BOTLIST)) ||
+		((flag == "HubTopic") && (usr->mxConn->mFeatures & eSF_HUBTOPIC)) ||
+		((flag == "UserIP2") && (usr->mxConn->mFeatures & eSF_USERIP2)) ||
+		((flag == "TTHSearch") && (usr->mxConn->mFeatures & eSF_TTHSEARCH)) ||
+		((flag == "Feed") && (usr->mxConn->mFeatures & eSF_FEED)) ||
+		((flag == "ClientID") && (usr->mxConn->mFeatures & eSF_CLIENTID)) ||
+		((flag == "IN") && (usr->mxConn->mFeatures & eSF_IN)) ||
+		((flag == "BanMsg") && (usr->mxConn->mFeatures & eSF_BANMSG)) ||
+		((flag == "TLS") && (usr->mxConn->mFeatures & eSF_TLS))
+	)
+		return true;
+	return false;
+}
+
+bool nVerliHub::nPerlPlugin::nCallback::ReportUser(char *nick, char *msg) {
+	cServerDC *serv = GetCurrentVerlihub();
+	cUser *usr = serv->mUserList.GetUserByNick(nick);
+	if ((usr == NULL) || (usr->mxConn == NULL))
+		return false;
+	serv->ReportUserToOpchat(usr->mxConn, msg, false);
+	return true;
+}
+
+bool nVerliHub::nPerlPlugin::nCallback::SendToOpChat(char *msg) {
+	cServerDC *serv = GetCurrentVerlihub();
+	serv->mOpChat->SendPMToAll(msg, NULL);
+	return true;
+}
