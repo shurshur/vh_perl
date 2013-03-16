@@ -71,6 +71,7 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	InUserSupports
 	ReportUser
 	SendToOpChat
+	ScriptCommand
 ) ] );
 
 our @EXPORT_OK = ( "VH__Call__Function", @{ $EXPORT_TAGS{'all'} } );

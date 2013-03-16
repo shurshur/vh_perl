@@ -26,7 +26,7 @@
 namespace nVerliHub {
 	namespace nPerlPlugin {
 
-/* Class for multiplying perl interpreters for many scripts. May be rewritten in future. */
+/* Multi perl interpreters class */
 
 class cPerlMulti
 {
@@ -41,6 +41,7 @@ public:
 	int Size() { return mPerl.size(); }
 
 	std::vector<cPerlInterpreter*> mPerl;
+	std::vector<std::string> mScriptStack;
 };
 
 	}; // namespace nPerlPlugin

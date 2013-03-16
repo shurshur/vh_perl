@@ -249,3 +249,8 @@ ReportUser(nick, msg)
 bool
 SendToOpChat(msg)
 	char * msg
+
+bool
+ScriptCommand(cmd, data)
+	char * cmd
+	char * data

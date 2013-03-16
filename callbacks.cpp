@@ -189,6 +189,14 @@ bool nVerliHub::nPerlPlugin::nCallback::SetTopic(char *_topic) {
 	return true;
 }
 
+bool nVerliHub::nPerlPlugin::nCallback::ScriptCommand(char *_cmd, char *_data) {
+	cServerDC *server = GetCurrentVerlihub();
+	std::string cmd = _cmd;
+	std::string data = _data;
+	::ScriptCommand(cmd, data, "perl", GetPI()->mPerl.mScriptStack.back());
+	return true;
+}
+
 bool nVerliHub::nPerlPlugin::nCallback::InUserSupports(char *nick, char *_flag) {
 	cServerDC *serv = GetCurrentVerlihub();
 	std::string flag = _flag;

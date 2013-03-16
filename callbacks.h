@@ -40,6 +40,7 @@ const char *GetTopic();
 bool InUserSupports(char *nick, char *flag);
 bool ReportUser(char *nick, char *msg);
 bool SendToOpChat(char *msg);
+bool ScriptCommand(char *, char *);
 
 } // nVerliHub
 } // nPerlPlugin

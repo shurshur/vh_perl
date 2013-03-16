@@ -46,9 +46,11 @@ int cPerlMulti::Parse(int argc, char*argv[]) {
 bool cPerlMulti::CallArgv(const char *Function, char * Args [] ) {
 	int s=0;
 	for(std::vector<cPerlInterpreter*>::const_iterator i = mPerl.begin(); i != mPerl.end(); i++) {
+		mScriptStack.push_back((*i)->mScriptName);
 		s++;
 		bool ret = (*i)->CallArgv(Function, Args);
 		//std::cerr << "Call " << Function << " on script " << (*i)->mScriptName << " returns " << ret << std::endl;
+		mScriptStack.pop_back();
 		if(!ret) return false;
 	}
 	return true;
