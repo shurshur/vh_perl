@@ -42,6 +42,7 @@ public:
 
 	std::vector<cPerlInterpreter*> mPerl;
 	std::vector<std::string> mScriptStack;
+	std::vector<cPerlInterpreter*> mIntStack;
 };
 
 	}; // namespace nPerlPlugin

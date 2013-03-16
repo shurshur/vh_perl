@@ -46,11 +46,16 @@ int cPerlMulti::Parse(int argc, char*argv[]) {
 bool cPerlMulti::CallArgv(const char *Function, char * Args [] ) {
 	int s=0;
 	for(std::vector<cPerlInterpreter*>::const_iterator i = mPerl.begin(); i != mPerl.end(); i++) {
+		// Push scriptname and cPerlInterpreter (required for vh::ScriptCommand)
 		mScriptStack.push_back((*i)->mScriptName);
+		mIntStack.push_back(*i);
 		s++;
 		bool ret = (*i)->CallArgv(Function, Args);
-		//std::cerr << "Call " << Function << " on script " << (*i)->mScriptName << " returns " << ret << std::endl;
+		//std::cerr << "Call " << Function << " " << Args[0] << " " << " on script " << (*i)->mScriptName << " returns " << ret << std::endl;
 		mScriptStack.pop_back();
+		mIntStack.pop_back();
+		// Restore previous context for vh::ScriptCommand
+		if(mIntStack.size()) mIntStack.back()->SetMyContext();
 		if(!ret) return false;
 	}
 	return true;
