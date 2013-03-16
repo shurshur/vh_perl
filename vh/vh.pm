@@ -42,8 +42,11 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	GetConfig
 	GetUsersCount
 	GetNickList
+	GetNickListArray
 	GetOPList
+	GetOPListArray
 	GetBotList
+	GetBotListArray
 	GetBots
 	GetTotalShareSize
 	GetVHCfgDir
@@ -140,6 +143,30 @@ sub DelRobot {
   return UnRegBot(@_);
 }
 
+sub GetNickListArray {
+  my $nl = GetNickList();
+  $nl =~ s#^\$NickList\s+##;
+  $nl =~ s#\$\$$##;
+  my @nl = split /\$\$/, $nl;
+  return @nl;
+}
+
+sub GetOPListArray {
+  my $nl = GetOPList();
+  $nl =~ s#^\$OpList\s+##;
+  $nl =~ s#\$\$$##;
+  my @nl = split /\$\$/, $nl;
+  return @nl;
+}
+
+sub GetBotListArray {
+  my $nl = GetBotList();
+  $nl =~ s#^\$BotList\s+##;
+  $nl =~ s#\$\$$##;
+  my @nl = split /\$\$/, $nl;
+  return @nl;
+}
+
 sub VHDBConnect {
   if (!$DBI_FOUND) {
     carp "No DBI found in your system. Install perl modules 'DBI' and 'DBD::mysql'";
@@ -162,6 +189,10 @@ sub VHDBConnect {
   if($config->db_charset) { $dbh->do("SET NAMES ".$config->db_charset); }
 
   return $dbh;
+}
+
+sub anyfunc {
+  return lala;
 }
 
 sub VH__Call__Function {

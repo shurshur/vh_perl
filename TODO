@@ -1,7 +1,9 @@
-Missed Perl callbacks found in Lua plugin:
+Missed Perl callbacks found in Lua plugin but not implemented yet:
 	vh::GetTempRights
 	vh::SetTempRights
 
 Use Math::Int64 instead of double in GetTotalShareSize???
-Return vh::GetNickList as array
+
+Return vh::GetNickList as array in array context??? Currently only separated *Array function implemented
+
 Fix everytime rebuild of vh module in cmake
