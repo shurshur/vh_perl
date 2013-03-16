@@ -75,6 +75,8 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	ReportUser
 	SendToOpChat
 	ScriptCommand
+	GetTempRights
+	SetTempRights
 ) ] );
 
 our @EXPORT_OK = ( "VH__Call__Function", @{ $EXPORT_TAGS{'all'} } );
