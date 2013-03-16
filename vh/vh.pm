@@ -199,10 +199,6 @@ sub VHDBConnect {
   return $dbh;
 }
 
-sub anyfunc {
-  return lala;
-}
-
 sub VH__Call__Function {
   my $func = shift;
   my $ref;
