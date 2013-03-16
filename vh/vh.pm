@@ -132,7 +132,15 @@ sub DisconnectByName {
 }
 
 sub GetBots {
-  carp "Perl Script plugin doesn't support GetBots!";
+  carp "PerlScript plugin doesn't support GetBots!";
+}
+
+sub GetTempRights {
+  carp "PerlScript plugin doesn't support GetTempRights currenlty";
+}
+
+sub SetTempRights {
+  carp "PerlScript plugin doesn't support SetTempRights currenlty";
 }
 
 sub AddRobot {

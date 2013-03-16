@@ -1,4 +1,4 @@
-Missed Perl callbacks found in Lua plugin but not implemented yet:
+Not implemented yet both in LuaScript and PerlScript:
 	vh::GetTempRights
 	vh::SetTempRights
 
