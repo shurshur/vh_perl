@@ -184,7 +184,6 @@ bool nVerliHub::nPerlPlugin::nCallback::SetTopic(char *_topic) {
 	cServerDC *server = GetCurrentVerlihub();
 	std::string topic = _topic;
 	std::string message;
-	server->mC.hub_topic = topic;
 	SetConfig((char*)"config", (char*)"hub_topic", _topic);
 	cDCProto::Create_HubName(message, server->mC.hub_name, topic);
 	server->SendToAll(message, eUC_NORMUSER, eUC_MASTER);
