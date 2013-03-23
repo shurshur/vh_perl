@@ -81,7 +81,7 @@ int nVerliHub::nPerlPlugin::nCallback::IsUserOnline(char *nick) {
 
 int nVerliHub::nPerlPlugin::nCallback::IsBot(char *nick) {
 	cServerDC *server = GetCurrentVerlihub();
-	cPluginRobot *robot = (cPluginRobot *)server->mUserList.GetUserByNick(nick);
+	cUserRobot *robot = (cUserRobot *)server->mRobotList.GetUserBaseByNick(nick);
 	return robot == NULL ? 0 : 1;
 }
 int nVerliHub::nPerlPlugin::nCallback::GetUpTime() {
@@ -164,13 +164,13 @@ bool nVerliHub::nPerlPlugin::nCallback::UnRegBot(char *nick) {
 	cServerDC *server = GetCurrentVerlihub();
 	cpiPerl *pi = GetPI();
 
-	cPluginRobot *robot = (cPluginRobot *)server->mUserList.GetUserByNick(nick);
+	cUserRobot *robot = (cUserRobot *)server->mRobotList.GetUserBaseByNick(nick);
 	if(robot != NULL) {
 		//pi->mPerl.delBot(nick);
 		pi->DelRobot(robot);
 	} else {
 		// error: "Bot doesn't exist"
-	    return false;
+	        return false;
 	}
 	return true;
 }
@@ -184,6 +184,8 @@ bool nVerliHub::nPerlPlugin::nCallback::SetTopic(char *_topic) {
 	cServerDC *server = GetCurrentVerlihub();
 	std::string topic = _topic;
 	std::string message;
+	server->mC.hub_topic = topic;
+	SetConfig((char*)"config", (char*)"hub_topic", _topic);
 	cDCProto::Create_HubName(message, server->mC.hub_name, topic);
 	server->SendToAll(message, eUC_NORMUSER, eUC_MASTER);
 	return true;
