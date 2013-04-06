@@ -33,19 +33,22 @@ CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/const-c.inc"
   "${CMAKE_CURRENT_BINARY_DIR}/const-c.inc" COPYONLY)
 
-add_custom_target(vh_make ALL)
-add_custom_command(TARGET vh_make
+ADD_CUSTOM_COMMAND(
+  OUTPUT
+    Makefile.build
   COMMAND perl Makefile.PL
-  COMMAND make -f Makefile.build)
+)
 
 ADD_CUSTOM_COMMAND(
   OUTPUT
     blib/arch/auto/vh/vh.so
     blib/arch/auto/vh/vh.bs 
     lib/arch/auto/vh/autosplit.ix
-  COMMAND perl Makefile.PL
   COMMAND make -f Makefile.build
-  )
+  DEPENDS Makefile.build
+  COMMENT "Building vh module")
+
+ADD_CUSTOM_TARGET(vh_make ALL DEPENDS blib/arch/auto/vh/vh.so)
 
 INSTALL(
   FILES
@@ -60,3 +63,4 @@ INSTALL(
     vh.pm
   DESTINATION
     ${PERL_SITE_ARCH})
+
