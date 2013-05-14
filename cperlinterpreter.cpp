@@ -74,7 +74,7 @@ int cPerlInterpreter::Parse(int argc, char *argv[])
 	mScriptName = argv[1];
 	
 	char *args[] = { (char *)"Main", NULL };
-	CallArgv("vh::VH__Call__Function", args);
+	CallArgv(PERL_CALL, args);
 	return result;
 }
 

@@ -39,14 +39,14 @@ static const char * toString(int number)
 nVerliHub::nPerlPlugin::cpiPerl::cpiPerl():
 mConsole(this), mQuery(NULL)
 {
-	mName = "PerlScript";
+	mName = PERLSCRIPT_PI_IDENTIFIER;
 	mVersion= PERLSCRIPT_VERSION;
 }
 
 nVerliHub::nPerlPlugin::cpiPerl::~cpiPerl()
 {
 	char *args[] = { (char *)"UnLoad", NULL };
-	mPerl.CallArgv("vh::VH__Call__Function", args);
+	mPerl.CallArgv(PERL_CALL, args);
 
 	if(mQuery) {
 		mQuery->Clear();
@@ -139,7 +139,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnNewConn(cConnDC * conn)
 {
 	char *args[] =  {	(char *)"VH_OnNewConn",
 				(char *)conn->AddrIP().c_str(), NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -147,7 +147,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnCloseConn(cConnDC * conn)
 {
 	char *args[] =  {	(char *)"VH_OnCloseConn",
 				(char *)conn->AddrIP().c_str(), NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -158,11 +158,11 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnCloseConnEx(cConnDC * conn)
 		char *args[] =  {	(char *)"VH_OnCloseConnEx",
 					(char *)conn->AddrIP().c_str(),
 					(char *)conn->mpUser->mNick.c_str(), NULL };
-		ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+		ret = mPerl.CallArgv(PERL_CALL, args);
 	} else {
 		char *args[] =  {	(char *)"VH_OnCloseConnEx",
 					(char *)conn->AddrIP().c_str(), NULL };
-		ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+		ret = mPerl.CallArgv(PERL_CALL, args);
 	}
 	return ret;
 }
@@ -174,7 +174,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgAny(cConnDC *conn , cMessageDC 
 					(char *)conn->mpUser->mNick.c_str(),
 					(char *)msg->mStr.c_str(),
 					NULL };
-		bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+		bool ret = mPerl.CallArgv(PERL_CALL, args);
 		return ret;
 	}
 	return true;
@@ -187,7 +187,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgAnyEx(cConnDC *conn , cMessageD
 					(char *)conn->AddrIP().c_str(),
 					(char *)msg->mStr.c_str(),
 					NULL };
-		bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+		bool ret = mPerl.CallArgv(PERL_CALL, args);
 		return ret;
 	}
 	return true;
@@ -199,7 +199,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnUnknownMsg(cConnDC *conn , cMessageDC *m
 				(char *)(conn->mpUser?conn->mpUser->mNick.c_str():conn->AddrIP().c_str()),
 				(char *)msg->mStr.c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -209,7 +209,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSupport(cConnDC *conn , cMessag
 				(char *)conn->AddrIP().c_str(),
 				(char *)msg->mStr.c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -219,7 +219,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgBotINFO(cConnDC *conn , cMessag
 				(char *)conn->mpUser->mNick.c_str(),
 				(char *)msg->mStr.c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -229,7 +229,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgVersion(cConnDC *conn , cMessag
 				(char *)conn->AddrIP().c_str(),
 				(char *)msg->mStr.c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -239,7 +239,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgValidateNick(cConnDC *conn , cM
 				(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_1_ALL).c_str(),
 				NULL }; // eCH_1_ALL, eCH_1_PARAM
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -249,7 +249,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgMyPass(cConnDC *conn , cMessage
 				(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_1_ALL).c_str(),
 				NULL }; // eCH_1_ALL, eCH_1_PARAM
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -259,7 +259,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgMyINFO(cConnDC *conn , cMessage
 				(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_MI_ALL).c_str(),
 				NULL }; // eCH_MI_ALL, eCH_MI_DEST, eCH_MI_NICK, eCH_MI_INFO, eCH_MI_DESC, eCH_MI_SPEED, eCH_MI_MAIL, eCH_MI_SIZE;
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -273,7 +273,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnFirstMyINFO(cConnDC *conn , cMessageDC *
 					(char *) msg->ChunkString(eCH_MI_MAIL).c_str(),
 					(char *) msg->ChunkString(eCH_MI_SIZE).c_str(),
 					NULL };
-		bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+		bool ret = mPerl.CallArgv(PERL_CALL, args);
 		return ret;
 	}
 	return true;
@@ -285,7 +285,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSearch(cConnDC *conn , cMessage
 				(char *)conn->AddrIP().c_str(),
 				(char *)msg->mStr.c_str(),
 				NULL }; // active: eCH_AS_ALL, eCH_AS_ADDR, eCH_AS_IP, eCH_AS_PORT, eCH_AS_QUERY; passive: eCH_PS_ALL, eCH_PS_NICK, eCH_PS_QUERY;
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -295,7 +295,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgSR(cConnDC *conn , cMessageDC *
 				(char *)conn->AddrIP().c_str(),
 				(char *)msg->ChunkString(eCH_SR_ALL).c_str(),
 				NULL }; // eCH_SR_ALL, eCH_SR_FROM, eCH_SR_PATH, eCH_SR_SIZE, eCH_SR_SLOTS, eCH_SR_SL_FR, eCH_SR_SL_TO, eCH_SR_HUBINFO, eCH_SR_TO;
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -305,7 +305,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgChat(cConnDC *conn , cMessageDC
 				(char *)conn->mpUser->mNick.c_str(), 
 				(char *) msg->ChunkString(eCH_CH_MSG).c_str(), 
 				NULL}; // eCH_CH_ALL, eCH_CH_NICK, eCH_CH_MSG;
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -316,7 +316,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgPM(cConnDC *conn , cMessageDC *
 				(char *) msg->ChunkString(eCH_PM_MSG).c_str(), 
 				(char *) msg->ChunkString(eCH_PM_TO).c_str(),
 				NULL}; // eCH_PM_ALL, eCH_PM_TO, eCH_PM_FROM, eCH_PM_CHMSG, eCH_PM_NICK, eCH_PM_MSG;
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -327,7 +327,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgMCTo(cConnDC *conn , cMessageDC
 				(char *) msg->ChunkString(eCH_PM_MSG).c_str(), 
 				(char *) msg->ChunkString(eCH_PM_TO).c_str(),
 				NULL}; // eCH_PM_ALL, eCH_PM_TO, eCH_PM_FROM, eCH_PM_CHMSG, eCH_PM_NICK, eCH_PM_MSG;
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -337,7 +337,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnValidateTag(cConnDC *conn , cDCTag *tag)
 				(char *)conn->mpUser->mNick.c_str(),
 				(char *) tag->mTag.c_str(),
 				NULL};
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -351,7 +351,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorCommand(cConnDC *conn , std::str
 				(char *)conn->mpUser->mNick.c_str(),
 				(char *) str->c_str(),
 				NULL};
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -362,7 +362,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorKicks(cUser *op , cUser *user, s
 				(char *)user->mNick.c_str(),
 				(char *)reason->c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -372,7 +372,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnOperatorDrops(cUser *op , cUser *user)
 				(char *)op->mNick.c_str(),
 				(char *)user->mNick.c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -382,7 +382,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnUserCommand(cConnDC *conn , std::string 
 				(char *)conn->mpUser->mNick.c_str(),
 				(char *) str->c_str(),
 				NULL};
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -394,7 +394,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnHubCommand(cConnDC *conn , std::string *
 				(char *)toString(op),
 				(char *)toString(pm),
 				NULL};
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -403,7 +403,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnUserLogin(cUser *user)
 	char *args[]= {		(char *)"VH_OnUserLogin",
 				(char *)user->mNick.c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -412,7 +412,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnUserLogout(cUser *user)
 	char *args[]= {		(char *)"VH_OnUserLogout",
 				(char *)user->mNick.c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -423,7 +423,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnTimer(long msec)
 	char *args[]= {		(char *)"VH_OnTimer",
 				(char *)s.str().c_str(),
 				NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -431,7 +431,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnNewReg(cRegUserInfo *reginfo)
 {
 	char *args[]= {		(char *)"VH_OnNewReg",
 				NULL };
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -442,7 +442,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnNewBan(cBan *ban)
 				(char *)ban->mNick.c_str(),
 				(char *)ban->mReason.c_str(),
 				NULL};
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -453,7 +453,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnUnBan(std::string nick, std::string op, 
 				(char *) op.c_str(),
 				(char *) reason.c_str(),
 				NULL};
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -468,7 +468,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgConnectToMe(cConnDC *conn, cMes
 					(char *)msg->ChunkString(eCH_CM_PORT).c_str(),
 					NULL
 		}; // eCH_CM_NICK, eCH_CM_ACTIVE, eCH_CM_IP, eCH_CM_PORT
-		ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+		ret = mPerl.CallArgv(PERL_CALL, args);
 	}
 	return ret;
 }
@@ -482,7 +482,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnParsedMsgRevConnectToMe(cConnDC *conn, c
 					(char *)msg->ChunkString(eCH_RC_OTHER).c_str(),
 					NULL
 		}; // eCH_CM_NICK, eCH_CM_ACTIVE, eCH_CM_IP, eCH_CM_PORT
-		ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+		ret = mPerl.CallArgv(PERL_CALL, args);
 	}
 	return ret;
 }
@@ -493,7 +493,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnDelReg(std::string mNick, int mClass)
 				(char *) mNick.c_str(),
 				(char *) toString(mClass),
 				NULL};
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -504,7 +504,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnUpdateClass(std::string mNick, int oldCl
 				(char *) toString(oldClass),
 				(char *) toString(newClass),
 				NULL};
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -516,7 +516,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnScriptCommand(std::string cmd, std::stri
 				(char *) plug.c_str(),
 				(char *) script.c_str(),
 				NULL};
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 
@@ -526,7 +526,7 @@ bool nVerliHub::nPerlPlugin::cpiPerl::OnHubName(std::string nick, std::string hu
 				(char *) nick.c_str(),
 				(char *) hubname.c_str(),
 				NULL};
-	bool ret = mPerl.CallArgv("vh::VH__Call__Function", args);
+	bool ret = mPerl.CallArgv(PERL_CALL, args);
 	return ret;
 }
 

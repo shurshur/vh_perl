@@ -33,7 +33,7 @@ static cServerDC * GetCurrentVerlihub() {
 
 static cpiPerl * GetPI() {
 	cServerDC *server = GetCurrentVerlihub();
-	return (cpiPerl *)server->mPluginManager.GetPlugin("PerlScript");
+	return (cpiPerl *)server->mPluginManager.GetPlugin(PERLSCRIPT_PI_IDENTIFIER);
 }
 
 int nVerliHub::nPerlPlugin::nCallback::SQLQuery(char *query) {

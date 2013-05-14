@@ -23,6 +23,9 @@
 #ifndef NSCRIPTSCPERLINTERPRETER_H
 #define NSCRIPTSCPERLINTERPRETER_H
 
+#define PERL_CALL "vh::VH__Call__Function"
+
+
 namespace nPerl
 {
 #include <EXTERN.h>               /* from the Perl distribution     */
