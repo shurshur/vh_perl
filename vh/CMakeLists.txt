@@ -48,7 +48,15 @@ ADD_CUSTOM_COMMAND(
   DEPENDS Makefile.build
   COMMENT "Building vh module")
 
+ADD_CUSTOM_COMMAND(
+  OUTPUT
+    const.pm
+  COMMAND sh "${CMAKE_CURRENT_SOURCE_DIR}/gen-const" "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/const.pm"
+  DEPENDS gen-const
+  COMMENT "Building vh::const module")
+
 ADD_CUSTOM_TARGET(vh_make ALL DEPENDS blib/arch/auto/vh/vh.so)
+ADD_CUSTOM_TARGET(vh_const_make ALL DEPENDS const.pm)
 
 INSTALL(
   FILES
@@ -63,4 +71,10 @@ INSTALL(
     vh.pm
   DESTINATION
     ${PERL_SITE_ARCH})
+
+INSTALL(
+  FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/const.pm
+  DESTINATION
+    ${PERL_SITE_ARCH}/vh/)
 

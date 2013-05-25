@@ -214,6 +214,11 @@ sub VH__Call__Function {
   return $ret;
 }
 
+BEGIN {
+  require vh::const;
+  vh::const->import();
+}
+
 # Autoload methods go after =cut, and are processed by the autosplit program.
 
 1;

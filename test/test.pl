@@ -177,6 +177,24 @@ sub RunTests {
   Say "    topic=".vh::GetTopic;
   Say "  vh::SetTopic to old topic";
   vh::SetTopic $topic;
+  Div;
+  Say "Test constants";
+  Say "  vh::eUC_PINGER=".vh::eUC_PINGER;
+  Say "  vh::eUC_NORMUSER=".vh::eUC_NORMUSER;
+  Say "  vh::eUC_REGUSER=".vh::eUC_REGUSER;
+  Say "  vh::eUC_VIPUSER=".vh::eUC_VIPUSER;
+  Say "  vh::eUC_OPERATOR=".vh::eUC_OPERATOR;
+  Say "  vh::eUC_CHEEF=".vh::eUC_CHEEF;
+  Say "  vh::eUC_ADMIN=".vh::eUC_ADMIN;
+  Say "  vh::eUC_MASTER=".vh::eUC_MASTER;
+  Div;
+  Say "Test vh::InUserSupports";
+  Say "  vh::InUserSupports($opnick,'TTHSearch')";
+  Say "    ".vh::InUserSupports($opnick,'TTHSearch');
+  Say "  vh::InUserSupports($opnick,vh::eSF_TTHSEARCH)";
+  Say "    ".vh::InUserSupports($opnick,vh::eSF_TTHSEARCH);
+  Say "  vh::InUserSupports($opnick,'SomethingWrong')";
+  Say "    ".vh::InUserSupports($opnick,'SomethingWrong');
   Say "============= FINISH =============";
 }
 

@@ -201,6 +201,7 @@ bool nVerliHub::nPerlPlugin::nCallback::ScriptCommand(char *_cmd, char *_data) {
 bool nVerliHub::nPerlPlugin::nCallback::InUserSupports(char *nick, char *_flag) {
 	cServerDC *serv = GetCurrentVerlihub();
 	std::string flag = _flag;
+	int iflag = atoi(_flag);
 	cUser *usr = serv->mUserList.GetUserByNick(nick);
 	if ((usr==NULL) || (usr->mxConn == NULL))
 		return false;
@@ -223,7 +224,8 @@ bool nVerliHub::nPerlPlugin::nCallback::InUserSupports(char *nick, char *_flag) 
 		((flag == "ClientID") && (usr->mxConn->mFeatures & eSF_CLIENTID)) ||
 		((flag == "IN") && (usr->mxConn->mFeatures & eSF_IN)) ||
 		((flag == "BanMsg") && (usr->mxConn->mFeatures & eSF_BANMSG)) ||
-		((flag == "TLS") && (usr->mxConn->mFeatures & eSF_TLS))
+		((flag == "TLS") && (usr->mxConn->mFeatures & eSF_TLS)) ||
+		(usr->mxConn->mFeatures & iflag)
 	)
 		return true;
 	return false;
